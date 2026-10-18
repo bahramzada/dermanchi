@@ -94,6 +94,36 @@ final class DayActionsTests: XCTestCase {
         XCTAssertTrue(xiloial.allSatisfy { $0.takenAt != nil })
     }
 
+    /// "Yatıram" unudulub: səhər gün özü bitir, widget isə "Günə başla" təklif edir.
+    func testForgottenSleepIsClosedTheNextMorning() throws {
+        let context = try makeContext()
+        DayActions.startDay(firstMedicationID: "xiloial", start: date(10),
+                            markPastAsTaken: true, now: date(22), context: context)
+        let session = try XCTUnwrap(try context.fetch(FetchDescriptor<DaySession>()).first)
+        let nextMorning = cal.date(byAdding: .day, value: 1, to: date(8))!
+        let lateEvening = cal.date(byAdding: .day, value: 1, to: date(0, 30))!
+
+        // Gecə yarısından sonra hələ gözləyən damcı var: gün davam edir.
+        XCTAssertFalse(session.isAbandoned(at: lateEvening))
+        DayActions.closeAbandonedSessions(context: context, now: lateEvening)
+        XCTAssertNil(session.endedAt)
+
+        XCTAssertEqual(WidgetState.make(session: session, at: nextMorning).phase, .notStarted)
+        XCTAssertTrue(session.isAbandoned(at: nextMorning))
+        DayActions.closeAbandonedSessions(context: context, now: nextMorning)
+        XCTAssertEqual(session.endedAt, date(22))
+        // Buraxılmış dozalar tarixçədə qalır.
+        XCTAssertFalse(session.doses.isEmpty)
+    }
+
+    func testTodaysSessionIsNeverAbandoned() throws {
+        let context = try makeContext()
+        DayActions.startDay(firstMedicationID: "xiloial", start: date(10), now: date(10), context: context)
+        let session = try XCTUnwrap(try context.fetch(FetchDescriptor<DaySession>()).first)
+        // Hamısı buraxılsa da (məs. telefon uzun söndürülüb), eyni gündə bitmiş sayılmır.
+        XCTAssertFalse(session.isAbandoned(at: date(23, 59)))
+    }
+
     func testTakenFromNotificationMarksDose() throws {
         let context = try makeContext()
         DayActions.startDay(firstMedicationID: "xiloial", start: date(10),

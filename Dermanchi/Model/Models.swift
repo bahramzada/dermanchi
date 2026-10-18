@@ -79,6 +79,13 @@ final class DaySession {
     var lastTakenAt: Date? {
         doses.compactMap(\.takenAt).max()
     }
+
+    /// "Yatıram" basılmayıb: gün əvvəlki təqvim günündən qalıb və gözləyən damcı da yoxdur
+    /// (hamısı vurulub və ya buraxılıb). Belə gün artıq bitmiş sayılır.
+    func isAbandoned(at now: Date, calendar: Calendar = .current) -> Bool {
+        guard endedAt == nil, !calendar.isDate(startedAt, inSameDayAs: now) else { return false }
+        return !doses.contains { $0.takenAt == nil && $0.status(at: now) != .missed }
+    }
 }
 
 enum DoseStatus {

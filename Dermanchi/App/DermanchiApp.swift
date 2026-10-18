@@ -38,6 +38,7 @@ struct RootView: View {
         }
         .onChange(of: scenePhase) { _, phase in
             if phase == .active {
+                DayActions.closeAbandonedSessions(context: context)
                 NotificationManager.sync(context: context)
                 WidgetCenter.shared.reloadAllTimelines()
                 LiveActivityManager.sync(context: context)

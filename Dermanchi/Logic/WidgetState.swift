@@ -46,6 +46,9 @@ struct WidgetState: Equatable {
             return calendar.isDate(session.startedAt, inSameDayAs: date) ? WidgetState(phase: .finished) : .notStarted
         }
 
+        // "Yatıram" unudulub və səhər olub: widget "Gün bitdi" yox, yeni gün təklif etməlidir.
+        if session.isAbandoned(at: date, calendar: calendar) { return .notStarted }
+
         let doses = session.sortedDoses
         let upcoming = doses.filter { $0.takenAt == nil && $0.status(at: date) != .missed }
         func snapshot(_ dose: Dose?) -> NextDose? {

@@ -116,12 +116,26 @@ enum DayActions {
     private static func closeForgottenSessions(context: ModelContext, except skipped: DaySession? = nil) {
         let open = (try? context.fetch(FetchDescriptor<DaySession>(predicate: #Predicate { $0.endedAt == nil }))) ?? []
         for session in open where session !== skipped {
-            let end = session.lastTakenAt ?? session.startedAt
-            for dose in session.doses where dose.takenAt == nil && dose.scheduledAt > end {
-                context.delete(dose)
-            }
-            session.endedAt = end
+            close(session, context: context)
         }
+    }
+
+    private static func close(_ session: DaySession, context: ModelContext) {
+        let end = session.lastTakenAt ?? session.startedAt
+        for dose in session.doses where dose.takenAt == nil && dose.scheduledAt > end {
+            context.delete(dose)
+        }
+        session.endedAt = end
+    }
+
+    /// "Yatıram" unudulubsa, əvvəlki günü özü bitirir ki, səhər "Günə başla" görünsün.
+    /// Tətbiq hər açılanda çağırılır.
+    static func closeAbandonedSessions(context: ModelContext, now: Date = .now) {
+        let open = (try? context.fetch(FetchDescriptor<DaySession>(predicate: #Predicate { $0.endedAt == nil }))) ?? []
+        let abandoned = open.filter { $0.isAbandoned(at: now) }
+        guard !abandoned.isEmpty else { return }
+        for session in abandoned { close(session, context: context) }
+        save(context)
     }
 
     /// Dil dəyişəndə bildirişlər, widget və Live Activity yeni dildə yenidən qurulur.
