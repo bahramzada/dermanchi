@@ -12,7 +12,6 @@ struct DoseProvider: TimelineProvider {
     }
 
     func getSnapshot(in context: Context, completion: @escaping (DoseEntry) -> Void) {
-        LanguageModel.shared.reload()
         if context.isPreview {
             completion(DoseEntry(date: .now, state: .preview))
             return
@@ -24,7 +23,6 @@ struct DoseProvider: TimelineProvider {
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<DoseEntry>) -> Void) {
-        LanguageModel.shared.reload()
         Task { @MainActor in
             let start = Calendar.current.date(bySetting: .second, value: 0, of: .now) ?? .now
             // Hər yeniləmədə təzə kontekst: uzun yaşayan paylaşılan kontekst tətbiqin yazdıqlarını gec görə bilər.
@@ -40,7 +38,6 @@ struct DoseProvider: TimelineProvider {
 
     @MainActor
     private static func latestSession(in context: ModelContext) -> DaySession? {
-        guard AppModel.isStoreReady else { return nil }
         var descriptor = FetchDescriptor<DaySession>(sortBy: [SortDescriptor(\.startedAt, order: .reverse)])
         descriptor.fetchLimit = 1
         return try? context.fetch(descriptor).first

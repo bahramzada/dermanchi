@@ -50,7 +50,7 @@ struct WidgetState: Equatable {
         if session.isAbandoned(at: date, calendar: calendar) { return .notStarted }
 
         let doses = session.sortedDoses
-        let upcoming = doses.filter { $0.takenAt == nil && $0.status(at: date) != .missed }
+        let upcoming = session.pendingDoses(at: date)
         func snapshot(_ dose: Dose?) -> NextDose? {
             dose.map { NextDose(id: $0.id, medicationID: $0.medicationID,
                                 scheduledAt: $0.scheduledAt, isDue: $0.status(at: date) == .due) }

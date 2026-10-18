@@ -23,7 +23,7 @@ enum NotificationManager {
 
     static func requestAuthorization() async {
         _ = try? await UNUserNotificationCenter.current()
-            .requestAuthorization(options: [.alert, .sound, .badge])
+            .requestAuthorization(options: [.alert, .sound])
     }
 
     /// Aktiv günün bütün gələcək dozaları üçün bildirişləri yenidən qurur.
@@ -31,8 +31,11 @@ enum NotificationManager {
         let center = UNUserNotificationCenter.current()
         center.removeAllPendingNotificationRequests()
 
-        let open = (try? context.fetch(FetchDescriptor<DaySession>(predicate: #Predicate { $0.endedAt == nil }))) ?? []
-        guard let session = open.first else { return }
+        guard let session = DaySession.openSessions(in: context).first else {
+            // Gün bitib: bildiriş mərkəzində qalan köhnə bildirişlərin düymələri də işləməsin.
+            center.removeAllDeliveredNotifications()
+            return
+        }
 
         // Tətbiqdə vurulmuş qeyd edilən dozaların bildiriş mərkəzində qalan bildirişlərini təmizlə.
         let takenIDs = session.doses.filter { $0.takenAt != nil }.map(\.id.uuidString)

@@ -20,8 +20,7 @@ enum LiveActivityManager {
     static func sync(context: ModelContext, now: Date = .now) {
         guard !isRunningTests else { return }
 
-        let open = (try? context.fetch(FetchDescriptor<DaySession>(predicate: #Predicate { $0.endedAt == nil }))) ?? []
-        let state = DoseActivityAttributes.ContentState.make(session: open.first, at: now)
+        let state = DoseActivityAttributes.ContentState.make(session: DaySession.openSessions(in: context).first, at: now)
         let activities = Activity<DoseActivityAttributes>.activities
 
         guard let state, AppSettings.liveActivityEnabled, ActivityAuthorizationInfo().areActivitiesEnabled else {

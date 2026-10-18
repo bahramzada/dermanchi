@@ -61,12 +61,6 @@ final class LanguageModel {
         selection = normalized
     }
 
-    /// Dil başqa prosesdə (tətbiqdə) dəyişibsə, yenidən oxuyur — widget timeline-ı qurulanda çağırılır.
-    func reload() {
-        let value = Self.storedSelection(in: defaults)
-        if value != selection { selection = value }
-    }
-
     /// Yaddaşdan təzə seçimi oxuyur. Widget prosesi uzun yaşaya bildiyi üçün `selection`-a güvənmir.
     static func storedSelection(in defaults: UserDefaults = LanguageModel.sharedDefaults) -> String {
         guard let value = defaults.string(forKey: storageKey), AppLanguage.language(for: value) != nil else {

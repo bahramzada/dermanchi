@@ -101,7 +101,7 @@ struct TodayView: View {
 
     private func activeDay(_ session: DaySession, now: Date) -> some View {
         let doses = session.sortedDoses
-        let next = doses.first { $0.takenAt == nil && $0.status(at: now) != .missed }
+        let next = session.pendingDoses(at: now).first
         let missed = doses.filter { $0.status(at: now) == .missed }
 
         return List {

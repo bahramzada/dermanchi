@@ -109,8 +109,7 @@ enum DayActions {
     /// "Yatıram" basılmayıbsa, köhnə günü son vurulan damcıda bitirir.
     /// Ondan sonrakı vurulmamış dozalar yuxu vaxtı sayılır və silinir.
     private static func closeForgottenSessions(context: ModelContext, except skipped: DaySession? = nil) {
-        let open = (try? context.fetch(FetchDescriptor<DaySession>(predicate: #Predicate { $0.endedAt == nil }))) ?? []
-        for session in open where session !== skipped {
+        for session in DaySession.openSessions(in: context) where session !== skipped {
             close(session, context: context)
         }
     }
@@ -126,8 +125,7 @@ enum DayActions {
     /// "Yatıram" unudulubsa, əvvəlki günü özü bitirir ki, səhər "Günə başla" görünsün.
     /// Tətbiq hər açılanda çağırılır.
     static func closeAbandonedSessions(context: ModelContext, now: Date = .now) {
-        let open = (try? context.fetch(FetchDescriptor<DaySession>(predicate: #Predicate { $0.endedAt == nil }))) ?? []
-        let abandoned = open.filter { $0.isAbandoned(at: now) }
+        let abandoned = DaySession.openSessions(in: context).filter { $0.isAbandoned(at: now) }
         guard !abandoned.isEmpty else { return }
         for session in abandoned { close(session, context: context) }
         save(context)
@@ -136,17 +134,13 @@ enum DayActions {
     /// Dil dəyişəndə bildirişlər, widget və Live Activity yeni dildə yenidən qurulur.
     static func refreshSurfaces(context: ModelContext) {
         NotificationManager.registerCategories()
-        NotificationManager.sync(context: context)
-        WidgetCenter.shared.reloadAllTimelines()
-        #if !WIDGET_EXTENSION
-        LiveActivityManager.sync(context: context)
-        #endif
+        syncSurfaces(context: context)
     }
 
     /// Bildirişdəki düymədən gələn əmri icra edir.
     static func handleNotificationAction(_ actionID: String, doseID: UUID, context: ModelContext, now: Date = .now) {
         let descriptor = FetchDescriptor<Dose>(predicate: #Predicate { $0.id == doseID })
-        guard let dose = try? context.fetch(descriptor).first else { return }
+        guard let dose = try? context.fetch(descriptor).first, dose.session?.endedAt == nil else { return }
         switch actionID {
         case NotificationManager.takenAction:
             if dose.takenAt == nil { markTaken(dose, at: now, context: context) }
@@ -159,6 +153,10 @@ enum DayActions {
 
     private static func save(_ context: ModelContext) {
         try? context.save()
+        syncSurfaces(context: context)
+    }
+
+    private static func syncSurfaces(context: ModelContext) {
         NotificationManager.sync(context: context)
         WidgetCenter.shared.reloadAllTimelines()
         #if !WIDGET_EXTENSION

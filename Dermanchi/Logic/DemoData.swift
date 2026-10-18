@@ -22,7 +22,7 @@ enum DemoData {
             let end = cal.date(bySettingHour: 23, minute: 15, second: 0, of: day)!
             DayActions.startDay(firstMedicationID: "xiloial", start: start,
                                 markPastAsTaken: true, now: end, context: context)
-            if let session = try? context.fetch(FetchDescriptor<DaySession>(predicate: #Predicate { $0.endedAt == nil })).first {
+            if let session = DaySession.openSessions(in: context).first {
                 if daysAgo == 2, let skipped = session.sortedDoses.dropFirst(7).first {
                     skipped.takenAt = nil
                 }
@@ -36,12 +36,12 @@ enum DemoData {
         DayActions.startDay(firstMedicationID: "xiloial",
                             start: now.addingTimeInterval(-startOffset),
                             markPastAsTaken: true, now: now, context: context)
-        if let session = try? context.fetch(FetchDescriptor<DaySession>(predicate: #Predicate { $0.endedAt == nil })).first,
+        if let session = DaySession.openSessions(in: context).first,
            let skipped = session.sortedDoses.first(where: { $0.medicationID == "maxidex" && $0.takenAt != nil && $0.priority > 0 && $0.scheduledAt > session.startedAt }) {
             skipped.takenAt = nil
         }
         if due,
-           let session = try? context.fetch(FetchDescriptor<DaySession>(predicate: #Predicate { $0.endedAt == nil })).first {
+           let session = DaySession.openSessions(in: context).first {
             session.sortedDoses.last { $0.takenAt != nil && $0.scheduledAt <= now }?.takenAt = nil
         }
         try? context.save()

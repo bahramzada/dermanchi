@@ -30,7 +30,7 @@ struct DoseActivityAttributes: ActivityAttributes {
         @MainActor
         static func make(session: DaySession?, at now: Date) -> ContentState? {
             guard let session, session.endedAt == nil else { return nil }
-            let upcoming = session.sortedDoses.filter { $0.takenAt == nil && $0.status(at: now) != .missed }
+            let upcoming = session.pendingDoses(at: now)
             guard let next = upcoming.first else { return nil }
             let after = upcoming.dropFirst().first
             let start = session.lastTakenAt ?? session.startedAt

@@ -124,6 +124,26 @@ final class DayActionsTests: XCTestCase {
         XCTAssertFalse(session.isAbandoned(at: date(23, 59)))
     }
 
+    /// "Yatıram"dan sonra qalmış köhnə bildirişin düyməsi bitmiş günün dozasına toxunmamalıdır.
+    func testNotificationActionsAreIgnoredAfterTheDayEnded() throws {
+        let context = try makeContext()
+        DayActions.startDay(firstMedicationID: "xiloial", start: date(10),
+                            markPastAsTaken: true, now: date(15, 59), context: context)
+        let session = try XCTUnwrap(try context.fetch(FetchDescriptor<DaySession>()).first)
+        let due = try XCTUnwrap(session.sortedDoses.first { $0.takenAt == nil })
+        DayActions.endDay(session, at: date(16, 1), context: context)
+        let scheduled = due.scheduledAt
+
+        DayActions.handleNotificationAction(NotificationManager.snoozeAction, doseID: due.id,
+                                            context: context, now: date(16, 2))
+        DayActions.handleNotificationAction(NotificationManager.takenAction, doseID: due.id,
+                                            context: context, now: date(16, 3))
+
+        XCTAssertEqual(due.scheduledAt, scheduled)
+        XCTAssertNil(due.snoozedUntil)
+        XCTAssertNil(due.takenAt)
+    }
+
     func testTakenFromNotificationMarksDose() throws {
         let context = try makeContext()
         DayActions.startDay(firstMedicationID: "xiloial", start: date(10),
