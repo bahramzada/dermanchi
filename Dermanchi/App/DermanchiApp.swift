@@ -6,6 +6,7 @@ import UserNotifications
 struct DermanchiApp: App {
     init() {
         UNUserNotificationCenter.current().delegate = NotificationDelegate.shared
+        NotificationManager.registerCategories()
     }
 
     var body: some Scene {
@@ -13,7 +14,7 @@ struct DermanchiApp: App {
             RootView()
                 .environment(\.locale, Locale(identifier: "az_AZ"))
         }
-        .modelContainer(for: [DaySession.self, Dose.self])
+        .modelContainer(AppModel.container)
     }
 }
 

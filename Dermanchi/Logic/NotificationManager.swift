@@ -4,6 +4,23 @@ import UserNotifications
 
 @MainActor
 enum NotificationManager {
+    nonisolated static let doseCategory = "DOSE"
+    nonisolated static let takenAction = "DOSE_TAKEN"
+    nonisolated static let snoozeAction = "DOSE_SNOOZE"
+
+    /// Bildirişi basıb saxlayanda (və ya kilid ekranında sola çəkəndə) çıxan düymələr.
+    nonisolated static func registerCategories() {
+        let taken = UNNotificationAction(
+            identifier: takenAction, title: "Vurdum",
+            icon: UNNotificationActionIcon(systemImageName: "checkmark.circle.fill"))
+        let snooze = UNNotificationAction(
+            identifier: snoozeAction, title: "10 dəq sonra xatırlat",
+            icon: UNNotificationActionIcon(systemImageName: "clock.arrow.circlepath"))
+        let category = UNNotificationCategory(
+            identifier: doseCategory, actions: [taken, snooze], intentIdentifiers: [])
+        UNUserNotificationCenter.current().setNotificationCategories([category])
+    }
+
     static func requestAuthorization() async {
         _ = try? await UNUserNotificationCenter.current()
             .requestAuthorization(options: [.alert, .sound, .badge])
@@ -16,6 +33,10 @@ enum NotificationManager {
 
         let open = (try? context.fetch(FetchDescriptor<DaySession>(predicate: #Predicate { $0.endedAt == nil }))) ?? []
         guard let session = open.first else { return }
+
+        // Tətbiqdə vurulmuş qeyd edilən dozaların bildiriş mərkəzində qalan bildirişlərini təmizlə.
+        let takenIDs = session.doses.filter { $0.takenAt != nil }.map(\.id.uuidString)
+        center.removeDeliveredNotifications(withIdentifiers: takenIDs)
 
         let upcoming = session.sortedDoses.filter { $0.takenAt == nil && $0.scheduledAt > now }
         // iOS eyni anda maksimum 64 gözləyən bildiriş saxlayır.
@@ -34,6 +55,9 @@ enum NotificationManager {
             }
             content.body = body
             content.sound = .default
+            content.categoryIdentifier = doseCategory
+            content.userInfo = ["doseID": dose.id.uuidString]
+            content.threadIdentifier = "doses"
 
             let components = Calendar.current.dateComponents(
                 [.year, .month, .day, .hour, .minute, .second], from: dose.scheduledAt)
@@ -52,5 +76,18 @@ final class NotificationDelegate: NSObject, UNUserNotificationCenterDelegate {
         willPresent notification: UNNotification
     ) async -> UNNotificationPresentationOptions {
         [.banner, .sound, .list]
+    }
+
+    /// Bildirişdəki düymə basılanda (tətbiq bağlı olsa belə arxa planda işə düşür).
+    func userNotificationCenter(
+        _ center: UNUserNotificationCenter,
+        didReceive response: UNNotificationResponse
+    ) async {
+        guard let raw = response.notification.request.content.userInfo["doseID"] as? String,
+              let doseID = UUID(uuidString: raw) else { return }
+        let actionID = response.actionIdentifier
+        await MainActor.run {
+            DayActions.handleNotificationAction(actionID, doseID: doseID, context: AppModel.container.mainContext)
+        }
     }
 }

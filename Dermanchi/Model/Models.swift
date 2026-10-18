@@ -1,6 +1,18 @@
 import Foundation
 import SwiftData
 
+@MainActor
+enum AppModel {
+    /// Tətbiq və bildiriş düymələri eyni məlumat bazasını istifadə edir.
+    static let container: ModelContainer = {
+        do {
+            return try ModelContainer(for: DaySession.self, Dose.self)
+        } catch {
+            fatalError("SwiftData açılmadı: \(error)")
+        }
+    }()
+}
+
 /// "Günə başla" ilə "Yatıram" arasındakı bir gün.
 @Model
 final class DaySession {
@@ -39,6 +51,8 @@ final class Dose {
     /// Bildiriş vaxtı — damcılar arası 5 dəq. fasilə üçün sürüşdürülə bilər.
     var scheduledAt: Date
     var takenAt: Date?
+    /// Bildirişdən "10 dəq sonra" basılıbsa, bu vaxtdan tez xatırladılmır.
+    var snoozedUntil: Date?
     var session: DaySession?
 
     init(medicationID: String, priority: Int, plannedAt: Date) {

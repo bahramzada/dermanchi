@@ -62,13 +62,31 @@ enum DayActions {
         save(context)
     }
 
+    /// Bildirişdən "10 dəq sonra xatırlat".
+    static func snooze(_ dose: Dose, minutes: Int = 10, at now: Date = .now, context: ModelContext) {
+        dose.snoozedUntil = now.addingTimeInterval(TimeInterval(minutes * 60))
+        if let session = dose.session { restagger(session, now: now) }
+        save(context)
+    }
+
     /// Gözləyən dozaların bildiriş vaxtlarını son vurulan damcıdan ən azı 5 dəq. sonraya çəkir.
+    /// Ertələmə bütün o vaxta qədərki damcı qrupunu sürüşdürür: ertələnən doza birinci,
+    /// qalanları 5 dəq. fasilə ilə ondan sonra gəlir.
     static func restagger(_ session: DaySession, now: Date) {
         let pending = session.doses
-            .filter { $0.takenAt == nil && $0.status(at: now) != .missed }
-            .sorted { ($0.plannedAt, $0.priority) < ($1.plannedAt, $1.priority) }
-        let times = DoseScheduler.stagger(pending.map(\.plannedAt), after: session.lastTakenAt)
-        for (dose, time) in zip(pending, times) {
+            .filter { $0.takenAt == nil && ($0.status(at: now) != .missed || ($0.snoozedUntil ?? .distantPast) > now) }
+        let snoozeFloor = pending.compactMap(\.snoozedUntil).filter { $0 > now }.max()
+        func base(_ dose: Dose) -> Date {
+            var t = max(dose.plannedAt, dose.snoozedUntil ?? dose.plannedAt)
+            if let snoozeFloor, dose.plannedAt < snoozeFloor { t = max(t, snoozeFloor) }
+            return t
+        }
+        func snoozedRank(_ dose: Dose) -> Int { (dose.snoozedUntil ?? .distantPast) > now ? 0 : 1 }
+        let sorted = pending.sorted {
+            (base($0), snoozedRank($0), $0.priority) < (base($1), snoozedRank($1), $1.priority)
+        }
+        let times = DoseScheduler.stagger(sorted.map(base), after: session.lastTakenAt)
+        for (dose, time) in zip(sorted, times) {
             dose.scheduledAt = time
         }
     }
@@ -83,6 +101,20 @@ enum DayActions {
                 context.delete(dose)
             }
             session.endedAt = end
+        }
+    }
+
+    /// Bildirişdəki düymədən gələn əmri icra edir.
+    static func handleNotificationAction(_ actionID: String, doseID: UUID, context: ModelContext, now: Date = .now) {
+        let descriptor = FetchDescriptor<Dose>(predicate: #Predicate { $0.id == doseID })
+        guard let dose = try? context.fetch(descriptor).first else { return }
+        switch actionID {
+        case NotificationManager.takenAction:
+            if dose.takenAt == nil { markTaken(dose, at: now, context: context) }
+        case NotificationManager.snoozeAction:
+            if dose.takenAt == nil { snooze(dose, at: now, context: context) }
+        default:
+            break
         }
     }
 
