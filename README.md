@@ -49,6 +49,7 @@ On top of that, two drops should never go in back-to-back: you wait about **5 mi
 - ⏱️ **Automatic 5-minute spacing**: when two drops fall at the same time, the second one is pushed back by 5 minutes. If you're late, everything after shifts to keep the gap.
 - 📉 **Tapering built in**: Maxidex drops from 5 to 1 dose a day on its own, and each drug stops on its end date.
 - 🔔 **Local notifications** for every dose, including a "next up" hint ("Sonra: Moxi-R in 5 min").
+- 👆 **Act right from the notification**: long-press, or swipe on the Lock Screen, then tap **Vurdum** to log the drop or **10 dəq sonra xatırlat** to snooze. You never have to open the app. Snoozing shifts the whole cluster of drops due at that time and keeps the 5-minute gaps.
 - 🚨 **Missed-dose tracking**: anything more than an hour late is flagged in red and stays visible so you can still log it.
 - 🌙 **"Going to sleep" button**: ends the day and silences remaining reminders. Forgot to press it? The next morning closes the previous day for you.
 - 🕙 **Backfill**: started your drops before opening the app? Pick the real start time and past doses are logged at their scheduled times.
@@ -165,7 +166,8 @@ Drugs are defined in [`Dermanchi/Model/Medication.swift`](Dermanchi/Model/Medica
 ## 🗺 Roadmap
 
 - [x] **Phase 1: Core app.** Day start, auto-schedule, 5-minute spacing, tapering, notifications, missed doses, history, backfill.
-- [ ] **Phase 2: Glanceable.** Home and Lock Screen widgets, *Vurdum* and *Snooze* actions right from the notification.
+- [x] **Phase 2a: Actionable notifications.** *Vurdum* and *Snooze* buttons right on the notification.
+- [ ] **Phase 2b: Glanceable.** Home and Lock Screen widgets with a *Vurdum* button, plus a Live Activity countdown in the Dynamic Island.
 - [ ] **Phase 3: Insights.** Adherence stats, per-drug countdown, PDF report to share with the doctor.
 
 ## 🔒 Privacy
