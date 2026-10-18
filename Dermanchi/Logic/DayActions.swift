@@ -6,7 +6,9 @@ import WidgetKit
 enum DayActions {
     /// İstifadəçi ilk damcını vurub "Günə başla" basanda.
     /// `start` keçmişdə ola bilər; `markPastAsTaken` olarsa, `start`-dan `now`-a qədərki dozalar
-    /// öz vaxtlarında vurulmuş sayılır. `replacing` verilərsə, həmin gün silinib yenidən qurulur.
+    /// öz vaxtlarında vurulmuş sayılır. `replacing` verilərsə, həmin gün yenidən qurulur, amma köhnə
+    /// dozalardakı qeydlər (əsl vurulma vaxtı, həm də buraxılmış olması) yeni cədvələ keçirilir:
+    /// `markPastAsTaken` yalnız köhnə gündə qarşılığı olmayan dozalara təsir edir.
     static func startDay(
         firstMedicationID: String,
         start: Date = .now,
@@ -15,6 +17,7 @@ enum DayActions {
         now: Date = .now,
         context: ModelContext
     ) {
+        let previous = replacing.map { $0.doses.map { (id: $0.medicationID, plannedAt: $0.plannedAt, takenAt: $0.takenAt) } } ?? []
         if let replacing { context.delete(replacing) }
         closeForgottenSessions(context: context, except: replacing)
 
@@ -32,12 +35,28 @@ enum DayActions {
         for (dose, time) in zip(doses, times) {
             dose.scheduledAt = time
         }
-        doses.first?.takenAt = start
+        // Başlanğıc vaxtı düzəldiləndə hər yeni doza eyni dərmanın ən yaxın köhnə dozası ilə (yarım interval
+        // daxilində) əlaqələndirilir və onun qeydi olduğu kimi qalır.
+        var unmatched = previous
+        var carriedOver = Set<UUID>()
+        for dose in doses {
+            let tolerance = (dose.medication?.interval ?? 0) / 2
+            let candidates = unmatched.enumerated().filter {
+                $0.element.id == dose.medicationID && abs($0.element.plannedAt.timeIntervalSince(dose.plannedAt)) <= tolerance
+            }
+            guard let best = candidates.min(by: {
+                abs($0.element.plannedAt.timeIntervalSince(dose.plannedAt)) < abs($1.element.plannedAt.timeIntervalSince(dose.plannedAt))
+            }) else { continue }
+            dose.takenAt = best.element.takenAt
+            carriedOver.insert(dose.id)
+            unmatched.remove(at: best.offset)
+        }
         if markPastAsTaken {
-            for dose in doses where dose.scheduledAt <= now {
+            for dose in doses where dose.scheduledAt <= now && !carriedOver.contains(dose.id) {
                 dose.takenAt = dose.scheduledAt
             }
         }
+        doses.first?.takenAt = start
         restagger(session, now: now)
         save(context)
     }

@@ -59,6 +59,41 @@ final class DayActionsTests: XCTestCase {
         XCTAssertEqual(pending.map(\.scheduledAt), [date(16, 10), date(16, 15), date(16, 20)])
     }
 
+    /// Başlanğıc vaxtı düzəldiləndə buraxılmış damcılar "vurulmuş" olmamalı, əsl vurulma vaxtları itməməlidir.
+    func testEditingStartKeepsMissedDosesAndRealTakenTimes() throws {
+        let context = try makeContext()
+        DayActions.startDay(firstMedicationID: "xiloial", start: date(10), now: date(10), context: context)
+        var session = try XCTUnwrap(try context.fetch(FetchDescriptor<DaySession>()).first)
+        let moxi = try XCTUnwrap(session.sortedDoses.first { $0.medicationID == "moxi-r" })
+        DayActions.markTaken(moxi, at: date(10, 20), context: context)
+
+        let now = date(13, 30)
+        func missedCount(_ s: DaySession) -> Int { s.doses.filter { $0.status(at: now) == .missed }.count }
+        let missedBefore = missedCount(session)
+        XCTAssertGreaterThan(missedBefore, 0)
+
+        DayActions.startDay(firstMedicationID: "xiloial", start: date(10), markPastAsTaken: true,
+                            replacing: session, now: now, context: context)
+
+        session = try XCTUnwrap(try context.fetch(FetchDescriptor<DaySession>()).first)
+        XCTAssertEqual(missedCount(session), missedBefore)
+        XCTAssertEqual(session.doses.first { $0.medicationID == "moxi-r" && $0.plannedAt == date(10) }?.takenAt, date(10, 20))
+    }
+
+    func testEditingStartStillBackfillsDosesThatDidNotExistBefore() throws {
+        let context = try makeContext()
+        DayActions.startDay(firstMedicationID: "xiloial", start: date(12), now: date(12), context: context)
+        var session = try XCTUnwrap(try context.fetch(FetchDescriptor<DaySession>()).first)
+
+        // Başlanğıc 2 saat tezə çəkilir: 10:00–12:00 arası dozaların köhnə qarşılığı yoxdur.
+        DayActions.startDay(firstMedicationID: "xiloial", start: date(10), markPastAsTaken: true,
+                            replacing: session, now: date(12, 30), context: context)
+        session = try XCTUnwrap(try context.fetch(FetchDescriptor<DaySession>()).first)
+        let xiloial = session.sortedDoses.filter { $0.medicationID == "xiloial" && $0.scheduledAt <= date(12, 30) }
+        XCTAssertEqual(xiloial.count, 2)
+        XCTAssertTrue(xiloial.allSatisfy { $0.takenAt != nil })
+    }
+
     func testTakenFromNotificationMarksDose() throws {
         let context = try makeContext()
         DayActions.startDay(firstMedicationID: "xiloial", start: date(10),
