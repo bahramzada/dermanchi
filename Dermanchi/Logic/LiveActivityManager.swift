@@ -39,17 +39,25 @@ enum LiveActivityManager {
         if let current = live.first, now.timeIntervalSince(current.attributes.startedAt) < maxAge {
             Task { await current.update(content) }
             end(Array(live.dropFirst()))
-        } else {
+            return
+        }
+
+        // Yeni activity əvvəl açılır, köhnə yalnız bundan sonra bağlanır: tətbiq arxa planda (məs. bildiriş
+        // düyməsi ilə) işləyirsə iOS yeni activity açmağa icazə verməyə bilər, onda köhnəsi qalmalıdır.
+        do {
+            _ = try Activity.request(
+                attributes: DoseActivityAttributes(startedAt: now),
+                content: content,
+                pushType: nil)
             end(activities)
-            do {
-                _ = try Activity.request(
-                    attributes: DoseActivityAttributes(startedAt: now),
-                    content: content,
-                    pushType: nil)
-            } catch {
-                // Məs. tətbiq arxa plandadır və ya istifadəçi Live Activity-ləri söndürüb.
-                // Tətbiq növbəti dəfə açılanda yenidən cəhd olunur.
-                logger.error("Live Activity failed to start: \(error.localizedDescription, privacy: .public)")
+        } catch {
+            // Tətbiq növbəti dəfə açılanda yenidən cəhd olunur.
+            logger.error("Live Activity failed to start: \(error.localizedDescription, privacy: .public)")
+            if let current = live.first {
+                Task { await current.update(content) }
+                end(Array(live.dropFirst()))
+            } else {
+                end(activities)
             }
         }
     }
