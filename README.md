@@ -70,12 +70,11 @@ On top of that, two drops should never go in back-to-back: you wait about **5 mi
 
 ## 🧩 Widgets
 
-<table>
-<tr>
-<td width="300" valign="top">
-<img src="docs/screenshots/home-widget.png" width="280" alt="Medium widget on the home screen" />
-</td>
-<td valign="top">
+<div align="center">
+
+<img src="docs/screenshots/home-widget.png" width="300" alt="Medium Dərmanchı widget on the iPhone home screen" />
+
+</div>
 
 | Widget | Size | Shows |
 | --- | --- | --- |
@@ -86,10 +85,6 @@ On top of that, two drops should never go in back-to-back: you wait about **5 mi
 - The countdown text ("52 dəq sonra") is pre-computed into minute-by-minute timeline entries, so it stays accurate without waking the app.
 - **Vurdum** runs an App Intent in the app's process. The app re-spaces the next drops, rebuilds notifications, and reloads every widget.
 - Once a drop is due, the widget turns red and shows *İNDİ VUR* ("take it now") along with how late it is.
-
-</td>
-</tr>
-</table>
 
 > [!NOTE]
 > The app and the widget share one SwiftData store inside an **App Group**. App Groups work with a free Apple ID personal team; this was verified by signing a test project. On first launch, data from earlier versions is migrated into the group automatically. The old file is copied, never moved.
