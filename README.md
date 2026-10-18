@@ -72,7 +72,9 @@ On top of that, two drops should never go in back-to-back: you wait about **5 mi
 
 <div align="center">
 
-<img src="docs/screenshots/home-widget.png" width="300" alt="Medium Dərmanchı widget on the iPhone home screen" />
+| Small · Next drop | Medium · Day progress | Lock Screen |
+| :---: | :---: | :---: |
+| <img src="docs/screenshots/widget-small.png" width="170" alt="Small widget: next drop Xiloial at 18:00 with a Vurdum button" /> | <img src="docs/screenshots/widget-medium.png" width="330" alt="Medium widget: next drop plus progress bars for each drug" /> | <img src="docs/screenshots/widget-lock.png" width="240" alt="Lock Screen widget: Xiloial at 18:00, 52 minutes left, then Moxi-R at 19:00" /> |
 
 </div>
 
@@ -85,6 +87,7 @@ On top of that, two drops should never go in back-to-back: you wait about **5 mi
 - The countdown text ("52 dəq sonra") is pre-computed into minute-by-minute timeline entries, so it stays accurate without waking the app.
 - **Vurdum** runs an App Intent in the app's process. The app re-spaces the next drops, rebuilds notifications, and reloads every widget.
 - Once a drop is due, the widget turns red and shows *İNDİ VUR* ("take it now") along with how late it is.
+- These images are rendered from the real widget views by `WidgetSnapshotTests`. Run them with `TEST_RUNNER_SNAPSHOT_DIR=$PWD/docs/screenshots` to regenerate.
 
 > [!NOTE]
 > The app and the widget share one SwiftData store inside an **App Group**. App Groups work with a free Apple ID personal team; this was verified by signing a test project. On first launch, data from earlier versions is migrated into the group automatically. The old file is copied, never moved.
@@ -149,9 +152,10 @@ Dermanchi/
 ├── App/            # App entry, tab bar
 ├── Model/          # Medication definitions, SwiftData models
 ├── Logic/          # DoseScheduler, DayActions, notifications, widget state, App Intent
-└── Views/          # Today, Start-day sheet, History, Medications
+├── Views/          # Today, Start-day sheet, History, Medications
+└── Widgets/        # Widget views (shared by the extension and snapshot tests)
 DermanchiWidget/    # WidgetKit extension (shares Model/ and Logic/ with the app)
-DermanchiTests/     # Scheduler, day-flow, notification-action and widget-state tests
+DermanchiTests/     # Scheduler, day-flow, notification-action, widget-state and snapshot tests
 design/logo/        # App icon source (SVG) and social preview
 scripts/            # install-iphone.sh
 ```
