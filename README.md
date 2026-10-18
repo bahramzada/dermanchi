@@ -15,7 +15,7 @@ Tap once when you take your first drop. Dərmanchı builds the rest of the day f
 ![WidgetKit](https://img.shields.io/badge/Widgets-WidgetKit-3BA8F5?style=flat-square)
 ![No backend](https://img.shields.io/badge/backend-none-22C55E?style=flat-square)
 
-[Features](#-features) · [Widgets](#-widgets) · [How it works](#-how-the-schedule-works) · [Getting started](#-getting-started) · [Roadmap](#-roadmap)
+[Features](#-features) · [Widgets](#-widgets) · [Live Activity](#-live-activity) · [How it works](#-how-the-schedule-works) · [Getting started](#-getting-started) · [Roadmap](#-roadmap)
 
 </div>
 
@@ -52,6 +52,7 @@ On top of that, two drops should never go in back-to-back: you wait about **5 mi
 - 🔔 **Local notifications** for every dose, including a "next up" hint ("Sonra: Moxi-R in 5 min").
 - 👆 **Act right from the notification**: long-press, or swipe on the Lock Screen, then tap **Vurdum** to log the drop or **10 dəq sonra xatırlat** to snooze. You never have to open the app. Snoozing shifts the whole cluster of drops due at that time and keeps the 5-minute gaps.
 - 🧩 **Home and Lock Screen widgets** show the next drop with a live countdown and today's progress. The home-screen widgets have a **Vurdum** button that logs the drop without opening the app.
+- ⏳ **Live Activity** in the Dynamic Island and on the Lock Screen: a second-by-second countdown to the next drop with a **Vurdum** button. It turns red when the drop is due.
 - 🚨 **Missed-dose tracking**: anything more than an hour late is flagged in red and stays visible so you can still log it.
 - 🌙 **"Going to sleep" button**: ends the day and silences remaining reminders. Forgot to press it? The next morning closes the previous day for you.
 - 🕙 **Backfill**: started your drops before opening the app? Pick the real start time and past doses are logged at their scheduled times.
@@ -87,6 +88,27 @@ On top of that, two drops should never go in back-to-back: you wait about **5 mi
 
 > [!NOTE]
 > The app and the widget share one SwiftData store inside an **App Group**. App Groups work with a free Apple ID personal team; this was verified by signing a test project. On first launch, data from earlier versions is migrated into the group automatically. The old file is copied, never moved.
+
+## ⏳ Live Activity
+
+<p align="center">
+  <img src="docs/screenshots/live-activity.png" width="520" alt="Dərmanchı Live Activity: compact Dynamic Island with Moxi-R and a countdown, the expanded island with a Vurdum button, and the Lock Screen panel with a progress bar" />
+</p>
+
+<p align="center">
+  <img src="docs/screenshots/live-activity-due.png" width="520" alt="Live Activity once the drop is due: red İNDİ VUR label and a red timer" />
+  <br />
+  <sub>Once the drop is due: <i>İNDİ VUR</i> in red, and the timer counts up how late it is.</sub>
+</p>
+
+- **Compact island:** the drug name in its color, plus a live countdown.
+- **Expanded island:** the drug, its time, a large countdown, the drop after it, and **Vurdum**.
+- **Lock Screen:** the countdown, a progress bar filling from the last drop to the next, and **Vurdum**.
+- **Lifecycle:** the activity starts with *Günə başla* and moves to the next drop after every *Vurdum*, whether from the app, a notification, a widget, or the island. It ends with *Yatıram*.
+- When a drop is due, the activity's `staleDate` passes. iOS turns it red with *İNDİ VUR* and the timer starts counting up how late you are. The app doesn't need to run for this.
+- iOS keeps a Live Activity for about 8 hours. The app replaces it before 7 hours, so a long day keeps its countdown.
+
+These are real simulator screenshots, and the Live Activity was also tested on an iPhone 14 Pro Max. The timers count down live, so the captures were taken a few seconds or minutes apart.
 
 ## 🧠 How the schedule works
 
@@ -138,6 +160,7 @@ Spacing is always recomputed from `plannedAt`, so a single late drop never makes
 | **Persistence** | SwiftData (`DaySession` and `Dose` models) |
 | **Reminders** | `UserNotifications` calendar triggers with *Vurdum* and snooze actions, rebuilt on every change |
 | **Widgets** | WidgetKit (small, medium, Lock Screen rectangular) with an interactive App Intent button |
+| **Live Activity** | ActivityKit with the Dynamic Island and Lock Screen. Updates are local, with no push server |
 | **Sharing** | App Group container for the SwiftData store |
 | **Project** | [XcodeGen](https://github.com/yonaskolb/XcodeGen) (`project.yml` is the source of truth) |
 | **Tests** | XCTest for scheduling, tapering and backfill logic |
@@ -194,7 +217,7 @@ Drugs are defined in [`Dermanchi/Model/Medication.swift`](Dermanchi/Model/Medica
 - [x] **Phase 1: Core app.** Day start, auto-schedule, 5-minute spacing, tapering, notifications, missed doses, history, backfill.
 - [x] **Phase 2a: Actionable notifications.** *Vurdum* and *Snooze* buttons right on the notification.
 - [x] **Phase 2b: Widgets.** Small and medium home-screen widgets with a *Vurdum* button, plus a Lock Screen widget.
-- [ ] **Phase 2c: Live Activity.** Countdown to the next drop in the Dynamic Island and on the Lock Screen.
+- [x] **Phase 2c: Live Activity.** Countdown to the next drop in the Dynamic Island and on the Lock Screen.
 - [ ] **Phase 3: Insights.** Adherence stats, per-drug countdown, PDF report to share with the doctor.
 
 ## 🔒 Privacy
