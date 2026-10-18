@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <title>Dərmanchı — Damcı</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4BA6FF"/>
+      <stop offset="1" stop-color="#1D4ED8"/>
+    </linearGradient>
+    <linearGradient id="drop" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#DCEAFF"/>
+    </linearGradient>
+  </defs>
+  <rect width="1024" height="1024" fill="url(#bg)"/>
+  <path d="M512 196 C512 196 300 466 300 606 A212 212 0 0 0 724 606 C724 466 512 196 512 196 Z" fill="url(#drop)"/>
+  <path d="M416 616 L486 686 L618 552" fill="none" stroke="#1D4ED8" stroke-width="58" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <title>Dərmanchı — D monoqram v2</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.6" y2="1">
+      <stop offset="0" stop-color="#1A2338"/>
+      <stop offset="1" stop-color="#0A0F1C"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="512" cy="500" r="430" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#38BDF8" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#38BDF8" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="mark" x1="284" y1="236" x2="744" y2="788" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#6EE7D3"/>
+      <stop offset="1" stop-color="#3BA8F5"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1024" height="1024" fill="url(#bg)"/>
+  <rect width="1024" height="1024" fill="url(#glow)"/>
+
+  <g transform="translate(512 512) scale(1.12) translate(-512 -512)">
+  <!-- D: dəqiq yarımdairə qövs, yuvarlaq künclü gövdə; içi damcı (divar qalınlığı ~96 hər tərəfdə) -->
+  <path fill="url(#mark)" fill-rule="evenodd" d="
+    M340 236 H468 A276 276 0 0 1 468 788 H340 A56 56 0 0 1 284 732 V292 A56 56 0 0 1 340 236 Z
+    M512 322 L621.8 486.8 A132 132 0 1 1 402.2 486.8 Z"/>
+
+  <!-- damcının parıltısı -->
+  <path d="M435.8 604 A88 88 0 0 0 474.8 639.8" fill="none" stroke="#6EE7D3" stroke-opacity="0.85" stroke-width="22" stroke-linecap="round"/>
+  </g>
+</svg>

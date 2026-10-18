@@ -1,0 +1,500 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		39E939FE75CF694C9B65D0FB /* DoseSchedulerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A8363786C5AE344A67A175 /* DoseSchedulerTests.swift */; };
+		3A4E48C04FDE6E2599C15AE4 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6979CF66897082489DCAE4FA /* Models.swift */; };
+		4054C38A87F84A1FC66CF822 /* Formatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79CAE17A9BCD5491FBC22B17 /* Formatting.swift */; };
+		44C1CAD9D3B9FEEFEC9A2AB2 /* MedicationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D682727A7265C94088B0CE53 /* MedicationsView.swift */; };
+		46816F5D9C1889FB1CE539E1 /* Medication.swift in Sources */ = {isa = PBXBuildFile; fileRef = DECBDF613612E3E46ACE6679 /* Medication.swift */; };
+		4695A42A552BD935F246B75D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A67ABC7D16F0DE00D19CF7C /* Assets.xcassets */; };
+		4D1776D784CA4F1388BD3A66 /* DayActionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EA7A6A29C2D69E66F04C03 /* DayActionsTests.swift */; };
+		750A15454828C1811CB5B7AC /* DermanchiApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F01D032A6E500A37861FD5 /* DermanchiApp.swift */; };
+		A41E928C50E2E3789D833B3A /* StartDaySheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31045F8DB88419F60B47714 /* StartDaySheet.swift */; };
+		A81F0065B2620F035EB6280F /* TodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02DAF1468B67B9358C2D682 /* TodayView.swift */; };
+		C854EC264623937086B9385C /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7C704B79DE9903EC7A33BA /* HistoryView.swift */; };
+		DB49D0BF4F84D92FFA04F64F /* DoseScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECE088743DC342EB43ACCF5F /* DoseScheduler.swift */; };
+		DFA0D646C5B6176C20C80245 /* DayActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF34621ABC5BC67DDC90B355 /* DayActions.swift */; };
+		E464A159CD55FDBF44B40123 /* DemoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD374D576785A49F6E6D00D /* DemoData.swift */; };
+		F20B14805DA65378A3DF39B6 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A505565E91273172C36E205F /* NotificationManager.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		46F26A5D54B926D495B9A43F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FB26F390BFF6B9957D9E6093 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 94ED1526C3C7FC01C75893F4;
+			remoteInfo = Dermanchi;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		1FD374D576785A49F6E6D00D /* DemoData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoData.swift; sourceTree = "<group>"; };
+		29F01D032A6E500A37861FD5 /* DermanchiApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DermanchiApp.swift; sourceTree = "<group>"; };
+		4A5E90F028D527A786DCE9B7 /* DermanchiTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = DermanchiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6979CF66897082489DCAE4FA /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		6D7C704B79DE9903EC7A33BA /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
+		79CAE17A9BCD5491FBC22B17 /* Formatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatting.swift; sourceTree = "<group>"; };
+		8A67ABC7D16F0DE00D19CF7C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A505565E91273172C36E205F /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		AF34621ABC5BC67DDC90B355 /* DayActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayActions.swift; sourceTree = "<group>"; };
+		C4EA7A6A29C2D69E66F04C03 /* DayActionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayActionsTests.swift; sourceTree = "<group>"; };
+		C9A8363786C5AE344A67A175 /* DoseSchedulerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoseSchedulerTests.swift; sourceTree = "<group>"; };
+		D1905858AF7AF0BF331B03B9 /* Dermanchi.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Dermanchi.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D31045F8DB88419F60B47714 /* StartDaySheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartDaySheet.swift; sourceTree = "<group>"; };
+		D682727A7265C94088B0CE53 /* MedicationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicationsView.swift; sourceTree = "<group>"; };
+		DECBDF613612E3E46ACE6679 /* Medication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Medication.swift; sourceTree = "<group>"; };
+		ECE088743DC342EB43ACCF5F /* DoseScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoseScheduler.swift; sourceTree = "<group>"; };
+		F02DAF1468B67B9358C2D682 /* TodayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		158361E30E05BA2C88C43535 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				DECBDF613612E3E46ACE6679 /* Medication.swift */,
+				6979CF66897082489DCAE4FA /* Models.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		326A801367E462E52DB41577 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				29F01D032A6E500A37861FD5 /* DermanchiApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		4002A2B3B5A9BE9D38F17045 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				6D7C704B79DE9903EC7A33BA /* HistoryView.swift */,
+				D682727A7265C94088B0CE53 /* MedicationsView.swift */,
+				D31045F8DB88419F60B47714 /* StartDaySheet.swift */,
+				F02DAF1468B67B9358C2D682 /* TodayView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		7CFAAC77DBDE87DBA9B92452 /* Dermanchi */ = {
+			isa = PBXGroup;
+			children = (
+				8A67ABC7D16F0DE00D19CF7C /* Assets.xcassets */,
+				326A801367E462E52DB41577 /* App */,
+				ADE77F021302BF057CC2E725 /* Logic */,
+				158361E30E05BA2C88C43535 /* Model */,
+				4002A2B3B5A9BE9D38F17045 /* Views */,
+			);
+			path = Dermanchi;
+			sourceTree = "<group>";
+		};
+		A9193A5A63E4EBAA35BF2792 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D1905858AF7AF0BF331B03B9 /* Dermanchi.app */,
+				4A5E90F028D527A786DCE9B7 /* DermanchiTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		ADE77F021302BF057CC2E725 /* Logic */ = {
+			isa = PBXGroup;
+			children = (
+				AF34621ABC5BC67DDC90B355 /* DayActions.swift */,
+				1FD374D576785A49F6E6D00D /* DemoData.swift */,
+				ECE088743DC342EB43ACCF5F /* DoseScheduler.swift */,
+				79CAE17A9BCD5491FBC22B17 /* Formatting.swift */,
+				A505565E91273172C36E205F /* NotificationManager.swift */,
+			);
+			path = Logic;
+			sourceTree = "<group>";
+		};
+		FA9D1392C95EF2FD525BD0ED /* DermanchiTests */ = {
+			isa = PBXGroup;
+			children = (
+				C4EA7A6A29C2D69E66F04C03 /* DayActionsTests.swift */,
+				C9A8363786C5AE344A67A175 /* DoseSchedulerTests.swift */,
+			);
+			path = DermanchiTests;
+			sourceTree = "<group>";
+		};
+		FF055EF1F25DC607117891A4 = {
+			isa = PBXGroup;
+			children = (
+				7CFAAC77DBDE87DBA9B92452 /* Dermanchi */,
+				FA9D1392C95EF2FD525BD0ED /* DermanchiTests */,
+				A9193A5A63E4EBAA35BF2792 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		5867B6B6C34E459B50CAE5A0 /* DermanchiTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 09C374CD719D2B176DBE058C /* Build configuration list for PBXNativeTarget "DermanchiTests" */;
+			buildPhases = (
+				0838A3F3EE831597F2C0C44C /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A5678512834F3F984CB9AD1B /* PBXTargetDependency */,
+			);
+			name = DermanchiTests;
+			packageProductDependencies = (
+			);
+			productName = DermanchiTests;
+			productReference = 4A5E90F028D527A786DCE9B7 /* DermanchiTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		94ED1526C3C7FC01C75893F4 /* Dermanchi */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 791B59132FE1472D02902725 /* Build configuration list for PBXNativeTarget "Dermanchi" */;
+			buildPhases = (
+				9C73D33F9CDAF6B09BB4679A /* Sources */,
+				3C0955EE6B031D7AFDE54810 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Dermanchi;
+			packageProductDependencies = (
+			);
+			productName = Dermanchi;
+			productReference = D1905858AF7AF0BF331B03B9 /* Dermanchi.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FB26F390BFF6B9957D9E6093 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					5867B6B6C34E459B50CAE5A0 = {
+						DevelopmentTeam = Y7X6GPG2MR;
+						ProvisioningStyle = Automatic;
+					};
+					94ED1526C3C7FC01C75893F4 = {
+						DevelopmentTeam = Y7X6GPG2MR;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = C56D6B8BB86A711D5AFF8412 /* Build configuration list for PBXProject "Dermanchi" */;
+			developmentRegion = az;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				az,
+			);
+			mainGroup = FF055EF1F25DC607117891A4;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = A9193A5A63E4EBAA35BF2792 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				94ED1526C3C7FC01C75893F4 /* Dermanchi */,
+				5867B6B6C34E459B50CAE5A0 /* DermanchiTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		3C0955EE6B031D7AFDE54810 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4695A42A552BD935F246B75D /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0838A3F3EE831597F2C0C44C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4D1776D784CA4F1388BD3A66 /* DayActionsTests.swift in Sources */,
+				39E939FE75CF694C9B65D0FB /* DoseSchedulerTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9C73D33F9CDAF6B09BB4679A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DFA0D646C5B6176C20C80245 /* DayActions.swift in Sources */,
+				E464A159CD55FDBF44B40123 /* DemoData.swift in Sources */,
+				750A15454828C1811CB5B7AC /* DermanchiApp.swift in Sources */,
+				DB49D0BF4F84D92FFA04F64F /* DoseScheduler.swift in Sources */,
+				4054C38A87F84A1FC66CF822 /* Formatting.swift in Sources */,
+				C854EC264623937086B9385C /* HistoryView.swift in Sources */,
+				46816F5D9C1889FB1CE539E1 /* Medication.swift in Sources */,
+				44C1CAD9D3B9FEEFEC9A2AB2 /* MedicationsView.swift in Sources */,
+				3A4E48C04FDE6E2599C15AE4 /* Models.swift in Sources */,
+				F20B14805DA65378A3DF39B6 /* NotificationManager.swift in Sources */,
+				A41E928C50E2E3789D833B3A /* StartDaySheet.swift in Sources */,
+				A81F0065B2620F035EB6280F /* TodayView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A5678512834F3F984CB9AD1B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 94ED1526C3C7FC01C75893F4 /* Dermanchi */;
+			targetProxy = 46F26A5D54B926D495B9A43F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		108D3975E7459527E0EEB3B4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.raullte.dermanchi.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Dermanchi.app/Dermanchi";
+			};
+			name = Debug;
+		};
+		6642785B5B1A0D4DB2C7666A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.raullte.dermanchi.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Dermanchi.app/Dermanchi";
+			};
+			name = Release;
+		};
+		773FF5A645C43F9ADC57DBF5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Dərmanchı";
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.raullte.dermanchi;
+				PRODUCT_NAME = Dermanchi;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		C0AD4DB33B90EEBF617078D6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = Y7X6GPG2MR;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		C67504B8E6DCE8518C449BD1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Dərmanchı";
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.raullte.dermanchi;
+				PRODUCT_NAME = Dermanchi;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		F1F0B9DEA34AF42F9830ADBE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = Y7X6GPG2MR;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		09C374CD719D2B176DBE058C /* Build configuration list for PBXNativeTarget "DermanchiTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				108D3975E7459527E0EEB3B4 /* Debug */,
+				6642785B5B1A0D4DB2C7666A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		791B59132FE1472D02902725 /* Build configuration list for PBXNativeTarget "Dermanchi" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C67504B8E6DCE8518C449BD1 /* Debug */,
+				773FF5A645C43F9ADC57DBF5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		C56D6B8BB86A711D5AFF8412 /* Build configuration list for PBXProject "Dermanchi" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F1F0B9DEA34AF42F9830ADBE /* Debug */,
+				C0AD4DB33B90EEBF617078D6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = FB26F390BFF6B9957D9E6093 /* Project object */;
+}
