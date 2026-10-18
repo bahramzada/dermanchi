@@ -18,7 +18,8 @@ struct DoseProvider: TimelineProvider {
             return
         }
         Task { @MainActor in
-            completion(DoseEntry(date: .now, state: Self.state(at: .now)))
+            let session = Self.latestSession(in: ModelContext(AppModel.container))
+            completion(DoseEntry(date: .now, state: WidgetState.make(session: session, at: .now)))
         }
     }
 
@@ -26,7 +27,9 @@ struct DoseProvider: TimelineProvider {
         LanguageModel.shared.reload()
         Task { @MainActor in
             let start = Calendar.current.date(bySetting: .second, value: 0, of: .now) ?? .now
-            let session = Self.latestSession()
+            // Hər yeniləmədə təzə kontekst: uzun yaşayan paylaşılan kontekst tətbiqin yazdıqlarını gec görə bilər.
+            let modelContext = ModelContext(AppModel.container)
+            let session = Self.latestSession(in: modelContext)
             let entries = (0..<Self.horizonMinutes).map { minute -> DoseEntry in
                 let date = start.addingTimeInterval(TimeInterval(minute * 60))
                 return DoseEntry(date: date, state: WidgetState.make(session: session, at: date))
@@ -36,16 +39,11 @@ struct DoseProvider: TimelineProvider {
     }
 
     @MainActor
-    private static func state(at date: Date) -> WidgetState {
-        WidgetState.make(session: latestSession(), at: date)
-    }
-
-    @MainActor
-    private static func latestSession() -> DaySession? {
+    private static func latestSession(in context: ModelContext) -> DaySession? {
         guard AppModel.isStoreReady else { return nil }
         var descriptor = FetchDescriptor<DaySession>(sortBy: [SortDescriptor(\.startedAt, order: .reverse)])
         descriptor.fetchLimit = 1
-        return try? AppModel.container.mainContext.fetch(descriptor).first
+        return try? context.fetch(descriptor).first
     }
 }
 
