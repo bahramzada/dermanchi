@@ -16,6 +16,7 @@ struct DoseProvider: TimelineProvider {
             completion(DoseEntry(date: .now, state: .preview))
             return
         }
+        nonisolated(unsafe) let completion = completion
         Task { @MainActor in
             let session = Self.latestSession(in: ModelContext(AppModel.container))
             completion(DoseEntry(date: .now, state: WidgetState.make(session: session, at: .now)))
@@ -23,6 +24,7 @@ struct DoseProvider: TimelineProvider {
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<DoseEntry>) -> Void) {
+        nonisolated(unsafe) let completion = completion
         Task { @MainActor in
             let start = Calendar.current.date(bySetting: .second, value: 0, of: .now) ?? .now
             // Hər yeniləmədə təzə kontekst: uzun yaşayan paylaşılan kontekst tətbiqin yazdıqlarını gec görə bilər.

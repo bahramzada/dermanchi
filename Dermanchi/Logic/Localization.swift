@@ -35,14 +35,16 @@ struct AppLanguage: Identifiable, Hashable {
 /// dil dəyişəndə avtomatik yenilənir.
 @Observable
 final class LanguageModel {
-    static let shared = LanguageModel()
+    // Yazma (`select`) yalnız əsas thread-dən olur; widget prosesi yalnız `storedSelection` oxuyur.
+    nonisolated(unsafe) static let shared = LanguageModel()
 
     /// "Sistem dili" seçimi.
     static let systemSelection = "system"
     private static let storageKey = "appLanguage"
 
     /// Tətbiq, widget və Live Activity-nin ortaq saxlanc yeri.
-    static let sharedDefaults = UserDefaults(suiteName: AppModel.appGroupID) ?? .standard
+    // `UserDefaults` thread-safe-dir, sadəcə `Sendable` kimi işarələnməyib.
+    nonisolated(unsafe) static let sharedDefaults = UserDefaults(suiteName: AppModel.appGroupID) ?? .standard
 
     @ObservationIgnored private let defaults: UserDefaults
 

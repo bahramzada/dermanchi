@@ -13,7 +13,7 @@ final class WidgetSnapshotTests: XCTestCase {
     private var outputDir: URL!
     private var originalSelection = LanguageModel.systemSelection
 
-    override func setUpWithError() throws {
+    override func setUp() async throws {
         guard let dir = ProcessInfo.processInfo.environment["SNAPSHOT_DIR"], !dir.isEmpty else {
             throw XCTSkip("SNAPSHOT_DIR verilməyib")
         }
@@ -24,7 +24,7 @@ final class WidgetSnapshotTests: XCTestCase {
         try FileManager.default.createDirectory(at: outputDir, withIntermediateDirectories: true)
     }
 
-    override func tearDown() {
+    override func tearDown() async throws {
         LanguageModel.shared.select(originalSelection)
     }
 

@@ -36,7 +36,7 @@ enum LiveActivityManager {
         let live = activities.filter { $0.activityState == .active || $0.activityState == .stale }
 
         if let current = live.first, now.timeIntervalSince(current.attributes.startedAt) < maxAge {
-            enqueue { await current.update(content) }
+            update(current, content)
             end(Array(live.dropFirst()))
             return
         }
@@ -53,7 +53,7 @@ enum LiveActivityManager {
             // Tətbiq növbəti dəfə açılanda yenidən cəhd olunur.
             logger.error("Live Activity failed to start: \(error.localizedDescription, privacy: .public)")
             if let current = live.first {
-                enqueue { await current.update(content) }
+                update(current, content)
                 end(Array(live.dropFirst()))
             } else {
                 end(activities)
@@ -73,8 +73,15 @@ enum LiveActivityManager {
         }
     }
 
+    private static func update(_ activity: Activity<DoseActivityAttributes>, _ content: ActivityContent<DoseActivityAttributes.ContentState>) {
+        // `Activity` yalnız bu sıradan istifadə olunur.
+        nonisolated(unsafe) let activity = activity
+        enqueue { await activity.update(content) }
+    }
+
     private static func end(_ activities: [Activity<DoseActivityAttributes>]) {
         for activity in activities {
+            nonisolated(unsafe) let activity = activity
             enqueue { await activity.end(nil, dismissalPolicy: .immediate) }
         }
     }

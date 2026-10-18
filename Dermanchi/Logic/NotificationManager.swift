@@ -74,7 +74,8 @@ enum NotificationManager {
 /// Completion handler versiyası istifadə olunur: `async` versiyada iOS cavabı əsas thread-dən
 /// kənarda qaytarır və UIKit tətbiqi arxa planda dayandırır (SIGABRT).
 final class NotificationDelegate: NSObject, UNUserNotificationCenterDelegate {
-    static let shared = NotificationDelegate()
+    // Vəziyyəti yoxdur.
+    nonisolated(unsafe) static let shared = NotificationDelegate()
 
     func userNotificationCenter(
         _ center: UNUserNotificationCenter,
@@ -92,11 +93,13 @@ final class NotificationDelegate: NSObject, UNUserNotificationCenterDelegate {
     ) {
         let raw = response.notification.request.content.userInfo["doseID"] as? String
         let actionID = response.actionIdentifier
+        // Handler bir dəfə, əsas thread-də çağırılır.
+        nonisolated(unsafe) let done = completionHandler
         DispatchQueue.main.async {
             if let raw, let doseID = UUID(uuidString: raw) {
                 DayActions.handleNotificationAction(actionID, doseID: doseID, context: AppModel.container.mainContext)
             }
-            completionHandler()
+            done()
         }
     }
 }
