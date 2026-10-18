@@ -36,6 +36,14 @@ struct RootView: View {
             #endif
             await NotificationManager.requestAuthorization()
         }
+        // Tətbiq səhərə qədər ön planda açıq qalsa da unudulmuş gün bağlansın.
+        .task(id: scenePhase) {
+            while scenePhase == .active, !Task.isCancelled {
+                try? await Task.sleep(for: .seconds(300))
+                guard scenePhase == .active, !Task.isCancelled else { break }
+                DayActions.closeAbandonedSessions(context: context)
+            }
+        }
         .onChange(of: scenePhase) { _, phase in
             if phase == .active {
                 DayActions.closeAbandonedSessions(context: context)
