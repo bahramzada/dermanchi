@@ -105,6 +105,16 @@ enum DayActions {
         }
     }
 
+    /// Dil dəyişəndə bildirişlər, widget və Live Activity yeni dildə yenidən qurulur.
+    static func refreshSurfaces(context: ModelContext) {
+        NotificationManager.registerCategories()
+        NotificationManager.sync(context: context)
+        WidgetCenter.shared.reloadAllTimelines()
+        #if !WIDGET_EXTENSION
+        LiveActivityManager.sync(context: context)
+        #endif
+    }
+
     /// Bildirişdəki düymədən gələn əmri icra edir.
     static func handleNotificationAction(_ actionID: String, doseID: UUID, context: ModelContext, now: Date = .now) {
         let descriptor = FetchDescriptor<Dose>(predicate: #Predicate { $0.id == doseID })

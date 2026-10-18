@@ -5,10 +5,10 @@ import Foundation
 /// `LiveActivityIntent` olduğu üçün sistem onu tətbiqin prosesində işə salır:
 /// beləcə bildirişlər də dərhal yenidən qurulur.
 struct MarkDoseTakenIntent: LiveActivityIntent {
-    static let title: LocalizedStringResource = "Damcını vurulmuş qeyd et"
+    static let title: LocalizedStringResource = "Mark dose as taken"
     static let isDiscoverable = false
 
-    @Parameter(title: "Doza")
+    @Parameter(title: "Dose")
     var doseID: String
 
     init() {}

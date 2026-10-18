@@ -55,9 +55,9 @@ struct Medication: Identifiable, Hashable {
 
     func scheduleDescription(on date: Date) -> String {
         switch dailyDoses(on: date) {
-        case .inactive: return "Bu gün yoxdur"
-        case .untilSleep: return "Hər \(intervalHours) saatdan bir · yatana qədər"
-        case .count(let n): return "Bu gün \(n) dəfə · hər \(intervalHours) saatdan bir"
+        case .inactive: return tr("Not today")
+        case .untilSleep: return tr("Every \(intervalHours) hours") + " · " + tr("until bedtime")
+        case .count(let n): return tr("\(n) times today") + " · " + tr("every \(intervalHours) hours")
         }
     }
 }

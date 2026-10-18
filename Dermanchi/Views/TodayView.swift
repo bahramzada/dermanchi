@@ -8,7 +8,7 @@ struct TodayView: View {
 
     @State private var choosingFirst = false
     @State private var confirmingSleep = false
-    @State private var editingStart: DaySession?
+    @State private var showingSettings = false
 
     var body: some View {
         NavigationStack {
@@ -19,7 +19,41 @@ struct TodayView: View {
                     notStarted(now: timeline.date)
                 }
             }
-            .navigationTitle("Dərmanchı")
+            .navigationTitle(Text(verbatim: "Dərmanchı"))
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        showingSettings = true
+                    } label: {
+                        Image(systemName: "gearshape")
+                    }
+                    .accessibilityLabel("Settings")
+                }
+                if openSessions.first != nil {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button {
+                            confirmingSleep = true
+                        } label: {
+                            Label("Going to sleep", systemImage: "moon.zzz.fill")
+                                .labelStyle(.titleAndIcon)
+                        }
+                        .tint(.indigo)
+                    }
+                }
+            }
+            .alert("End the day?", isPresented: $confirmingSleep) {
+                Button("Cancel", role: .cancel) {}
+                Button("Going to sleep", role: .destructive) {
+                    if let session = openSessions.first {
+                        DayActions.endDay(session, context: context)
+                    }
+                }
+            } message: {
+                Text("All remaining reminders will be cancelled. Tomorrow, tap “Start the day” after your first drop.")
+            }
+            .sheet(isPresented: $showingSettings) {
+                SettingsView(activeSession: openSessions.first)
+            }
         }
     }
 
@@ -30,15 +64,15 @@ struct TodayView: View {
         return List {
             Section {
                 VStack(alignment: .leading, spacing: 12) {
-                    Text(now.dayTitle.capitalized)
+                    Text(now.dayTitle)
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
-                    Text("İlk damcını vurduqdan sonra bas — günün qalan saatları avtomatik qurulacaq.")
+                    Text("Tap after you take your first drop — the rest of the day's times are set automatically.")
                         .font(.callout)
                     Button {
                         choosingFirst = true
                     } label: {
-                        Label("Günə başla", systemImage: "sunrise.fill")
+                        Label("Start the day", systemImage: "sunrise.fill")
                             .font(.headline)
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 8)
@@ -49,9 +83,9 @@ struct TodayView: View {
                 .padding(.vertical, 6)
             }
 
-            Section("Bu günün planı") {
+            Section("Today's plan") {
                 if meds.isEmpty {
-                    Text("Bu gün heç bir damcı yoxdur 🎉")
+                    Text("No drops today 🎉")
                 }
                 ForEach(meds) { med in
                     MedicationSummaryRow(medication: med, date: now)
@@ -77,7 +111,7 @@ struct TodayView: View {
                         DayActions.markTaken(next, context: context)
                     }
                 } else {
-                    Text("Gözləyən damcı yoxdur.")
+                    Text("No drops waiting.")
                         .foregroundStyle(.secondary)
                 }
             }
@@ -92,48 +126,17 @@ struct TodayView: View {
                         DoseRow(dose: dose, now: now)
                     }
                 } header: {
-                    Label("Buraxılan dozalar (\(missed.count))", systemImage: "exclamationmark.triangle.fill")
+                    Label("Missed doses (\(missed.count))", systemImage: "exclamationmark.triangle.fill")
                         .foregroundStyle(.red)
                 }
             }
 
-            Section("Günün cədvəli · \(session.startedAt.hm)-dən") {
+            Section("Today's schedule · from \(session.startedAt.hm)") {
                 ForEach(doses) { dose in
                     DoseRow(dose: dose, now: now)
                 }
             }
 
-        }
-        .sheet(item: $editingStart) { session in
-            StartDaySheet(replacing: session)
-        }
-        .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                Menu {
-                    Button("Başlanğıc vaxtını düzəlt", systemImage: "clock.arrow.circlepath") {
-                        editingStart = session
-                    }
-                } label: {
-                    Image(systemName: "ellipsis")
-                }
-            }
-            ToolbarItem(placement: .topBarTrailing) {
-                Button {
-                    confirmingSleep = true
-                } label: {
-                    Label("Yatıram", systemImage: "moon.zzz.fill")
-                        .labelStyle(.titleAndIcon)
-                }
-                .tint(.indigo)
-            }
-        }
-        .alert("Günü bitirək?", isPresented: $confirmingSleep) {
-            Button("Ləğv et", role: .cancel) {}
-            Button("Yatıram", role: .destructive) {
-                DayActions.endDay(session, context: context)
-            }
-        } message: {
-            Text("Qalan bütün bildirişlər ləğv olunacaq. Sabah ilk damcını vuranda yenidən “Günə başla” bas.")
         }
     }
 }
@@ -149,7 +152,7 @@ struct NextDoseCard: View {
         let med = dose.medication
         let isDue = dose.status(at: now) == .due
         VStack(alignment: .leading, spacing: 10) {
-            Text(isDue ? "İNDİ VUR" : "NÖVBƏTİ DAMCI")
+            Text(isDue ? tr("TAKE NOW") : tr("NEXT DROP"))
                 .font(.caption.bold())
                 .foregroundStyle(isDue ? .red : .secondary)
             HStack(alignment: .firstTextBaseline) {
@@ -161,15 +164,15 @@ struct NextDoseCard: View {
                     .font(.title2.monospacedDigit())
             }
             Text(isDue
-                 ? "\(durationText(now.timeIntervalSince(dose.scheduledAt))) gecikir"
-                 : "\(durationText(dose.scheduledAt.timeIntervalSince(now))) sonra")
+                 ? tr("\(durationText(now.timeIntervalSince(dose.scheduledAt))) late")
+                 : tr("in \(durationText(dose.scheduledAt.timeIntervalSince(now)))"))
                 .font(.subheadline)
                 .foregroundStyle(isDue ? .red : .secondary)
             Button(action: onTaken) {
                 HStack(spacing: 8) {
                     Image(systemName: "checkmark")
                         .font(.headline.weight(.heavy))
-                    Text("Vurdum")
+                    Text("Taken")
                         .font(.headline)
                 }
                 .foregroundStyle(.white)
@@ -200,7 +203,7 @@ struct ProgressStrip: View {
                 let taken = mine.filter { $0.takenAt != nil }.count
                 let totalText: String = med.dailyDoses(on: now) == .untilSleep ? "" : "/\(mine.count)"
                 VStack(spacing: 2) {
-                    Text("\(taken)\(totalText)")
+                    Text(verbatim: "\(taken)\(totalText)")
                         .font(.title3.bold().monospacedDigit())
                     Text(med.name)
                         .font(.caption)
@@ -236,7 +239,7 @@ struct DoseRow: View {
                 .font(.body.monospacedDigit())
                 .foregroundStyle(status == .taken ? .secondary : .primary)
             if status != .taken {
-                Button("Vurdum") { DayActions.markTaken(dose, context: context) }
+                Button("Taken") { DayActions.markTaken(dose, context: context) }
                     .buttonStyle(.bordered)
                     .controlSize(.small)
                     .tint(dose.medication?.color ?? .accentColor)
@@ -244,7 +247,7 @@ struct DoseRow: View {
         }
         .swipeActions {
             if status == .taken {
-                Button("Geri al") { DayActions.undo(dose, context: context) }
+                Button("Undo") { DayActions.undo(dose, context: context) }
                     .tint(.gray)
             }
         }
@@ -252,10 +255,10 @@ struct DoseRow: View {
 
     private func subtitle(_ status: DoseStatus) -> String {
         switch status {
-        case .taken: return "Vuruldu \(dose.takenAt?.hm ?? "")"
-        case .missed: return "Buraxıldı"
-        case .due: return "Gecikir"
-        case .upcoming: return "Gözləyir"
+        case .taken: return tr("Taken at \(dose.takenAt?.hm ?? "")")
+        case .missed: return tr("Missed")
+        case .due: return tr("Overdue")
+        case .upcoming: return tr("Upcoming")
         }
     }
 
@@ -285,7 +288,7 @@ struct MedicationSummaryRow: View {
                     .foregroundStyle(.secondary)
             }
             Spacer()
-            Text("Gün \(medication.dayNumber(on: date))/\(medication.totalDays())")
+            Text("Day \(medication.dayNumber(on: date))/\(medication.totalDays())")
                 .font(.caption.monospacedDigit())
                 .foregroundStyle(.secondary)
         }

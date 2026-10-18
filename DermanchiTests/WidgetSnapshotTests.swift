@@ -11,13 +11,21 @@ import XCTest
 @MainActor
 final class WidgetSnapshotTests: XCTestCase {
     private var outputDir: URL!
+    private var originalSelection = LanguageModel.systemSelection
 
     override func setUpWithError() throws {
         guard let dir = ProcessInfo.processInfo.environment["SNAPSHOT_DIR"], !dir.isEmpty else {
             throw XCTSkip("SNAPSHOT_DIR verilməyib")
         }
         outputDir = URL(fileURLWithPath: dir)
+        // `TEST_RUNNER_SNAPSHOT_LANG=az` ilə şəkillər başqa dildə render olunur (standart: ingilis).
+        originalSelection = LanguageModel.shared.selection
+        LanguageModel.shared.select(ProcessInfo.processInfo.environment["SNAPSHOT_LANG"] ?? "en")
         try FileManager.default.createDirectory(at: outputDir, withIntermediateDirectories: true)
+    }
+
+    override func tearDown() {
+        LanguageModel.shared.select(originalSelection)
     }
 
     /// Sabit an: 17:08 — növbəti damcı 18:00 Xiloial (52 dəq), ondan sonra 19:00 Moxi-R.

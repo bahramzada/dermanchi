@@ -25,7 +25,7 @@ enum AppModel {
             if !isExtension { migrateLegacyStoreIfNeeded(to: url) }
             return try ModelContainer(for: schema, configurations: ModelConfiguration(schema: schema, url: url))
         } catch {
-            fatalError("SwiftData açılmadı: \(error)")
+            fatalError("Could not open the SwiftData store: \(error)")
         }
     }()
 

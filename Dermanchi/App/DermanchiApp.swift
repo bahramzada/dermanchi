@@ -13,7 +13,6 @@ struct DermanchiApp: App {
     var body: some Scene {
         WindowGroup {
             RootView()
-                .environment(\.locale, Locale(identifier: "az_AZ"))
         }
         .modelContainer(AppModel.container)
     }
@@ -25,10 +24,12 @@ struct RootView: View {
 
     var body: some View {
         TabView {
-            Tab("Bu gün", systemImage: "drop.fill") { TodayView() }
-            Tab("Tarixçə", systemImage: "calendar") { HistoryView() }
-            Tab("Dərmanlar", systemImage: "cross.vial.fill") { MedicationsView() }
+            Tab(tr("Today"), systemImage: "drop.fill") { TodayView() }
+            Tab(tr("History"), systemImage: "calendar") { HistoryView() }
+            Tab(tr("Medications"), systemImage: "cross.vial.fill") { MedicationsView() }
         }
+        // Seçilmiş dil dəyişəndə `Text("...")` literalları da yenilənsin.
+        .environment(\.locale, L10n.locale)
         .task {
             #if DEBUG
             DemoData.seedIfRequested(context: context)

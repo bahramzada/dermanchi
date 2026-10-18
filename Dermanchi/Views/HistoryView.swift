@@ -8,8 +8,8 @@ struct HistoryView: View {
         NavigationStack {
             List {
                 if sessions.isEmpty {
-                    ContentUnavailableView("Hələ tarixçə yoxdur", systemImage: "calendar",
-                                           description: Text("“Günə başla” basandan sonra günlər burada görünəcək."))
+                    ContentUnavailableView("No history yet", systemImage: "calendar",
+                                           description: Text("Days will appear here after you tap “Start the day”."))
                 }
                 ForEach(sessions) { session in
                     NavigationLink {
@@ -19,7 +19,7 @@ struct HistoryView: View {
                     }
                 }
             }
-            .navigationTitle("Tarixçə")
+            .navigationTitle(tr("History"))
         }
     }
 }
@@ -32,16 +32,24 @@ struct SessionRow: View {
         let taken = session.doses.filter { $0.takenAt != nil }.count
         let missed = session.doses.filter { $0.status(at: now) == .missed }.count
         VStack(alignment: .leading, spacing: 4) {
-            Text(session.startedAt.dayTitle.capitalized)
+            Text(session.startedAt.dayTitle)
                 .font(.body.weight(.medium))
             HStack(spacing: 12) {
-                Text("\(session.startedAt.hm) – \(session.endedAt?.hm ?? "davam edir")")
+                Text(verbatim: "\(session.startedAt.hm) – \(session.endedAt?.hm ?? tr("ongoing"))")
                     .foregroundStyle(.secondary)
-                Label("\(taken)", systemImage: "checkmark.circle.fill")
-                    .foregroundStyle(.green)
+                Label {
+                    Text(verbatim: "\(taken)")
+                } icon: {
+                    Image(systemName: "checkmark.circle.fill")
+                }
+                .foregroundStyle(.green)
                 if missed > 0 {
-                    Label("\(missed)", systemImage: "xmark.circle.fill")
-                        .foregroundStyle(.red)
+                    Label {
+                        Text(verbatim: "\(missed)")
+                    } icon: {
+                        Image(systemName: "xmark.circle.fill")
+                    }
+                    .foregroundStyle(.red)
                 }
             }
             .font(.caption)
@@ -63,6 +71,6 @@ struct SessionDetailView: View {
                 }
             }
         }
-        .navigationTitle(session.startedAt.shortDay)
+        .navigationTitle(Text(verbatim: session.startedAt.shortDay))
     }
 }

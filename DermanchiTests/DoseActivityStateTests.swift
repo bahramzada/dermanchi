@@ -48,6 +48,13 @@ final class DoseActivityStateTests: XCTestCase {
         XCTAssertEqual(state.intervalStart, date(18, 1))
     }
 
+    func testOverdueFlagFollowsTheDoseTime() throws {
+        let (_, session) = try startedDay(now: date(17, 8))
+        XCTAssertEqual(DoseActivityAttributes.ContentState.make(session: session, at: date(17, 8))?.isOverdue, false)
+        // 18:00 Xiloial vaxtı keçib (1 saatdan az gecikmə) — hələ buraxılmış sayılmır.
+        XCTAssertEqual(DoseActivityAttributes.ContentState.make(session: session, at: date(18, 5))?.isOverdue, true)
+    }
+
     func testProgressRangeIsNeverEmpty() throws {
         // Vurulan damcıdan dərhal sonra növbəti damcı 5 dəq. sonradır, zolaq yenə ən azı 1 dəqiqədir.
         let (_, session) = try startedDay(now: date(10, 1))

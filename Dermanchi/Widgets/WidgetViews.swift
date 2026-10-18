@@ -41,7 +41,7 @@ struct NextDoseBlock: View {
     var body: some View {
         let color = next.medication?.color ?? .accentColor
         VStack(alignment: .leading, spacing: 2) {
-            Text(next.isDue ? "İNDİ VUR" : "NÖVBƏTİ DAMCI")
+            Text(next.isDue ? tr("TAKE NOW") : tr("NEXT DROP"))
                 .font(.system(size: 11, weight: .semibold))
                 .foregroundStyle(next.isDue ? .red : .secondary)
             HStack(spacing: 5) {
@@ -55,8 +55,8 @@ struct NextDoseBlock: View {
                 .font(.system(size: timeSize, weight: .semibold).monospacedDigit())
                 .minimumScaleFactor(0.7)
             Text(next.isDue
-                 ? "\(durationText(now.timeIntervalSince(next.scheduledAt))) gecikir"
-                 : "\(durationText(next.scheduledAt.timeIntervalSince(now))) sonra")
+                 ? tr("\(durationText(now.timeIntervalSince(next.scheduledAt))) late")
+                 : tr("in \(durationText(next.scheduledAt.timeIntervalSince(now)))"))
                 .font(.system(size: 11))
                 .foregroundStyle(next.isDue ? .red : .secondary)
         }
@@ -68,7 +68,7 @@ struct TakenButton: View {
 
     var body: some View {
         Button(intent: MarkDoseTakenIntent(doseID: next.id)) {
-            Label("Vurdum", systemImage: "checkmark")
+            Label(tr("Taken"), systemImage: "checkmark")
                 .font(.system(size: 13, weight: .semibold))
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 6)
@@ -88,9 +88,9 @@ struct EmptyStateView: View {
                 .font(.system(size: 22))
                 .foregroundStyle(phase == .finished ? .indigo : .orange)
             Spacer(minLength: 0)
-            Text(phase == .finished ? "Gün bitdi" : "Gün başlamayıb")
+            Text(phase == .finished ? tr("Day finished") : tr("Day not started"))
                 .font(.system(size: 15, weight: .semibold))
-            Text(phase == .finished ? "Yaxşı yuxular 🌙" : "İlk damcını vurub tətbiqdə “Günə başla” bas")
+            Text(phase == .finished ? tr("Good night 🌙") : tr("Take your first drop, then tap “Start the day” in the app"))
                 .font(.system(size: 11))
                 .foregroundStyle(.secondary)
         }
@@ -196,17 +196,17 @@ struct LockRectangularView: View {
             VStack(alignment: .leading, spacing: 1) {
                 HStack(spacing: 4) {
                     Image(systemName: "drop.fill")
-                    Text("\(next.medication?.name ?? next.medicationID) · \(next.scheduledAt.hm)")
+                    Text(verbatim: "\(next.medication?.name ?? next.medicationID) · \(next.scheduledAt.hm)")
                         .lineLimit(1)
                 }
                 .font(.headline)
                 .widgetAccentable()
                 Text(next.isDue
-                     ? "İndi vur · \(durationText(entry.date.timeIntervalSince(next.scheduledAt))) gecikir"
-                     : "\(durationText(next.scheduledAt.timeIntervalSince(entry.date))) sonra")
+                     ? tr("Take now · \(durationText(entry.date.timeIntervalSince(next.scheduledAt))) late")
+                     : tr("in \(durationText(next.scheduledAt.timeIntervalSince(entry.date)))"))
                     .font(.subheadline)
                 if let after = entry.state.after {
-                    Text("Sonra: \(after.medication?.name ?? after.medicationID) \(after.scheduledAt.hm)")
+                    Text(tr("Next: \(after.medication?.name ?? after.medicationID) \(after.scheduledAt.hm)"))
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }
@@ -214,11 +214,11 @@ struct LockRectangularView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
         } else {
             VStack(alignment: .leading, spacing: 1) {
-                Label(entry.state.phase == .finished ? "Gün bitdi" : "Gün başlamayıb",
+                Label(entry.state.phase == .finished ? tr("Day finished") : tr("Day not started"),
                       systemImage: entry.state.phase == .finished ? "moon.zzz.fill" : "drop")
                     .font(.headline)
                     .widgetAccentable()
-                Text(entry.state.phase == .finished ? "Yaxşı yuxular" : "Tətbiqdə “Günə başla” bas")
+                Text(entry.state.phase == .finished ? tr("Good night") : tr("Tap “Start the day” in the app"))
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }

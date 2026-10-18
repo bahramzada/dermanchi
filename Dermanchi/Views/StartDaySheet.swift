@@ -1,7 +1,7 @@
 import SwiftData
 import SwiftUI
 
-/// "Günə başla": ilk damcının vaxtı və hansı damcı olduğu.
+/// Günü başladan pəncərə: ilk damcının vaxtı və hansı damcı olduğu.
 /// `replacing` verilərsə, mövcud günün başlanğıcı düzəldilir.
 struct StartDaySheet: View {
     @Environment(\.modelContext) private var context
@@ -22,16 +22,16 @@ struct StartDaySheet: View {
         NavigationStack {
             Form {
                 Section {
-                    DatePicker("İlk damcı vaxtı", selection: $start,
+                    DatePicker("First drop time", selection: $start,
                                in: Calendar.current.startOfDay(for: now)...now,
                                displayedComponents: .hourAndMinute)
-                    Button("İndi") { start = .now }
+                    Button("Now") { start = .now }
                 } footer: {
-                    Text("Günün qalan saatları bu vaxtdan hesablanacaq.")
+                    Text("The rest of the day will be scheduled from this time.")
                 }
 
-                Section("İlk hansı damcını vurdun?") {
-                    Picker("İlk damcı", selection: $firstID) {
+                Section("Which drop did you take first?") {
+                    Picker("First drop", selection: $firstID) {
                         ForEach(meds) { med in
                             Text(med.name).tag(med.id)
                         }
@@ -41,22 +41,22 @@ struct StartDaySheet: View {
 
                 if isPast {
                     Section {
-                        Toggle("Keçmiş damcıları vurulmuş say", isOn: $markPast)
+                        Toggle("Count past drops as taken", isOn: $markPast)
                     } footer: {
                         Text(markPast
-                             ? "\(start.hm)-dan indiyə qədərki \(pastCount) doza öz vaxtında vurulmuş kimi qeyd olunacaq."
-                             : "Keçmiş dozaları özün bir-bir qeyd edəcəksən.")
+                             ? tr("From \(start.hm) until now, \(pastCount) drops will be logged as taken at their scheduled times.")
+                             : tr("You'll log past drops yourself, one by one."))
                     }
                 }
             }
-            .navigationTitle(replacing == nil ? "Günə başla" : "Başlanğıcı düzəlt")
+            .navigationTitle(replacing == nil ? tr("Start the day") : tr("Edit start time"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Ləğv et") { dismiss() }
+                    Button("Cancel") { dismiss() }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Başla") {
+                    Button("Start") {
                         DayActions.startDay(
                             firstMedicationID: firstID,
                             start: start,

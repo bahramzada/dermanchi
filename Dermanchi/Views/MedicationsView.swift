@@ -10,12 +10,12 @@ struct MedicationsView: View {
                     }
                 }
                 Section {
-                    Text("Hər vurmada hər iki gözə 1 damcı. Damcılar arası ən azı 5 dəqiqə gözlə.")
+                    Text("One drop in each eye every time. Wait at least 5 minutes between drops.")
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                 }
             }
-            .navigationTitle("Dərmanlar")
+            .navigationTitle(tr("Medications"))
         }
     }
 }
@@ -34,9 +34,9 @@ private struct MedicationDetail: View {
                 Text(medication.name).font(.title3.bold())
                 Spacer()
                 if day > total {
-                    Text("Bitdi ✅").font(.subheadline)
+                    Text("Done ✅").font(.subheadline)
                 } else {
-                    Text("Gün \(max(day, 0))/\(total)")
+                    Text("Day \(max(day, 0))/\(total)")
                         .font(.subheadline.monospacedDigit())
                 }
             }
@@ -44,7 +44,7 @@ private struct MedicationDetail: View {
                 .tint(medication.color)
             Text(medication.scheduleDescription(on: now))
                 .font(.subheadline)
-            Text("\(medication.startDate.shortDay) – \(lastDay.shortDay)")
+            Text(verbatim: "\(medication.startDate.shortDay) – \(lastDay.shortDay)")
                 .font(.caption)
                 .foregroundStyle(.secondary)
 
@@ -55,9 +55,9 @@ private struct MedicationDetail: View {
                         let to = Calendar.current.date(byAdding: .day, value: step - 1, to: from)!
                         let current = (day - 1) / step == stage
                         HStack {
-                            Text("\(from.shortDay) – \(to.shortDay)")
+                            Text(verbatim: "\(from.shortDay) – \(to.shortDay)")
                             Spacer()
-                            Text("gündə \(start - stage) dəfə")
+                            Text("\(start - stage) times a day")
                         }
                         .font(.caption.weight(current ? .bold : .regular))
                         .foregroundStyle(current ? medication.color : .secondary)

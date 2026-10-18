@@ -1,37 +1,29 @@
 import Foundation
 
+/// Tarix və vaxt formatları seçilmiş dilə və cihazın regionuna görə sistemin öz formatlayıcıları ilə çıxarılır:
+/// ayrıca dil üçün əl ilə yazılmış format yoxdur.
 extension Date {
-    private static let timeFormatter: DateFormatter = {
-        let f = DateFormatter()
-        f.locale = Locale(identifier: "az_AZ")
-        f.dateFormat = "HH:mm"
-        return f
-    }()
+    /// "09:06" və ya "9:06 AM"
+    var hm: String {
+        formatted(.dateTime.hour().minute().locale(L10n.locale))
+    }
 
-    private static let dayFormatter: DateFormatter = {
-        let f = DateFormatter()
-        f.locale = Locale(identifier: "az_AZ")
-        f.dateFormat = "d MMMM, EEEE"
-        return f
-    }()
+    /// "18 Oktyabr, Bazar" və ya "Sunday, October 18"
+    var dayTitle: String {
+        formatted(.dateTime.weekday(.wide).day().month(.wide).locale(L10n.locale))
+            .capitalized(with: L10n.locale)
+    }
 
-    private static let shortDayFormatter: DateFormatter = {
-        let f = DateFormatter()
-        f.locale = Locale(identifier: "az_AZ")
-        f.dateFormat = "d MMMM"
-        return f
-    }()
-
-    var hm: String { Self.timeFormatter.string(from: self) }
-    var dayTitle: String { Self.dayFormatter.string(from: self) }
-    var shortDay: String { Self.shortDayFormatter.string(from: self) }
+    /// "18 oktyabr" və ya "October 18"
+    var shortDay: String {
+        formatted(.dateTime.day().month(.wide).locale(L10n.locale))
+    }
 }
 
-/// "45 dəq", "1 saat 20 dəq"
+/// "45 dəq", "1 saat, 20 dəq" / "45 min", "1 hr, 20 min"
 func durationText(_ interval: TimeInterval) -> String {
-    let total = max(0, Int((interval / 60).rounded(.up)))
-    let h = total / 60, m = total % 60
-    if h == 0 { return "\(m) dəq" }
-    if m == 0 { return "\(h) saat" }
-    return "\(h) saat \(m) dəq"
+    let minutes = max(0, Int((interval / 60).rounded(.up)))
+    let units: Set<Duration.UnitsFormatStyle.Unit> = minutes >= 60 ? [.hours, .minutes] : [.minutes]
+    let style = Duration.UnitsFormatStyle(allowedUnits: units, width: .abbreviated).locale(L10n.locale)
+    return Duration.seconds(minutes * 60).formatted(style)
 }

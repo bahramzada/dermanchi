@@ -3,7 +3,7 @@ options:
   bundleIdPrefix: com.raullte
   deploymentTarget:
     iOS: "26.0"
-  developmentLanguage: az
+  developmentLanguage: en
 settings:
   base:
     DEVELOPMENT_TEAM: Y7X6GPG2MR
@@ -41,6 +41,7 @@ targets:
       - Dermanchi/Model
       - Dermanchi/Logic
       - Dermanchi/Widgets
+      - Dermanchi/Resources
     entitlements:
       path: DermanchiWidget/DermanchiWidget.entitlements
       properties:

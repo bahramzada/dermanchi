@@ -1,12 +1,15 @@
 #if !WIDGET_EXTENSION
 import ActivityKit
 import Foundation
+import OSLog
 import SwiftData
 
 /// "Növbəti damcı" Live Activity-sini aktiv günlə sinxron saxlayır:
 /// gün başlayanda açılır, hər dəyişiklikdə yenilənir, "Yatıram" ilə bağlanır.
 @MainActor
 enum LiveActivityManager {
+    private static let logger = Logger(subsystem: "com.raullte.dermanchi", category: "LiveActivity")
+
     /// iOS activity-ni ~8 saatdan sonra bitirir. Bundan əvvəl yenisi ilə əvəz edirik.
     static let maxAge: TimeInterval = 7 * 3600
 
@@ -21,14 +24,17 @@ enum LiveActivityManager {
         let state = DoseActivityAttributes.ContentState.make(session: open.first, at: now)
         let activities = Activity<DoseActivityAttributes>.activities
 
-        guard let state, ActivityAuthorizationInfo().areActivitiesEnabled else {
+        guard let state, AppSettings.liveActivityEnabled, ActivityAuthorizationInfo().areActivitiesEnabled else {
             end(activities)
             return
         }
 
         // Damcının vaxtı keçəndə activity "köhnəlmiş" sayılır və görünüş qırmızıya keçir.
-        let content = ActivityContent(state: state, staleDate: state.scheduledAt)
-        let live = activities.filter { $0.activityState == .active }
+        // Tarix artıq keçibsə heç qoyulmur: keçmiş köhnəlmə tarixi ilə başlayan activity ekranda görünmür.
+        // Bu halda qırmızı görünüşü `state.isOverdue` verir.
+        let content = ActivityContent(state: state, staleDate: state.scheduledAt > now ? state.scheduledAt : nil)
+        // Vaxtı keçmiş damcıda activity `stale` olur — o da canlıdır, bağlanıb yenidən başladılmamalıdır.
+        let live = activities.filter { $0.activityState == .active || $0.activityState == .stale }
 
         if let current = live.first, now.timeIntervalSince(current.attributes.startedAt) < maxAge {
             Task { await current.update(content) }
@@ -43,6 +49,7 @@ enum LiveActivityManager {
             } catch {
                 // Məs. tətbiq arxa plandadır və ya istifadəçi Live Activity-ləri söndürüb.
                 // Tətbiq növbəti dəfə açılanda yenidən cəhd olunur.
+                logger.error("Live Activity failed to start: \(error.localizedDescription, privacy: .public)")
             }
         }
     }

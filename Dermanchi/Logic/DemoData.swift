@@ -7,6 +7,10 @@ import SwiftData
 enum DemoData {
     static func seedIfRequested(context: ModelContext) {
         guard CommandLine.arguments.contains("-demo") else { return }
+        // Ekran şəkilləri üçün dil: `-demo-lang en`
+        if let flag = CommandLine.arguments.firstIndex(of: "-demo-lang"), flag + 1 < CommandLine.arguments.count {
+            LanguageModel.shared.select(CommandLine.arguments[flag + 1])
+        }
         try? context.delete(model: Dose.self)
         try? context.delete(model: DaySession.self)
 
@@ -26,14 +30,22 @@ enum DemoData {
             }
         }
 
+        // `-demo-due`: növbəti damcının vaxtı 90 saniyə əvvəl keçib (qırmızı "TAKE NOW" vəziyyəti).
+        let due = CommandLine.arguments.contains("-demo-due")
+        let startOffset: TimeInterval = due ? 6 * 3600 + 90 : 6 * 3600 + 50 * 60
         DayActions.startDay(firstMedicationID: "xiloial",
-                            start: now.addingTimeInterval(-(6 * 3600 + 50 * 60)),
+                            start: now.addingTimeInterval(-startOffset),
                             markPastAsTaken: true, now: now, context: context)
         if let session = try? context.fetch(FetchDescriptor<DaySession>(predicate: #Predicate { $0.endedAt == nil })).first,
            let skipped = session.sortedDoses.first(where: { $0.medicationID == "maxidex" && $0.takenAt != nil && $0.priority > 0 && $0.scheduledAt > session.startedAt }) {
             skipped.takenAt = nil
         }
+        if due,
+           let session = try? context.fetch(FetchDescriptor<DaySession>(predicate: #Predicate { $0.endedAt == nil })).first {
+            session.sortedDoses.last { $0.takenAt != nil && $0.scheduledAt <= now }?.takenAt = nil
+        }
         try? context.save()
+        DayActions.refreshSurfaces(context: context)
     }
 }
 #endif

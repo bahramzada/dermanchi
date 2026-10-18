@@ -11,10 +11,10 @@ enum NotificationManager {
     /// Bildirişi basıb saxlayanda (və ya kilid ekranında sola çəkəndə) çıxan düymələr.
     nonisolated static func registerCategories() {
         let taken = UNNotificationAction(
-            identifier: takenAction, title: "Vurdum",
+            identifier: takenAction, title: tr("Taken"),
             icon: UNNotificationActionIcon(systemImageName: "checkmark.circle.fill"))
         let snooze = UNNotificationAction(
-            identifier: snoozeAction, title: "10 dəq sonra xatırlat",
+            identifier: snoozeAction, title: tr("Remind in 10 min"),
             icon: UNNotificationActionIcon(systemImageName: "clock.arrow.circlepath"))
         let category = UNNotificationCategory(
             identifier: doseCategory, actions: [taken, snooze], intentIdentifiers: [])
@@ -45,12 +45,12 @@ enum NotificationManager {
 
             let content = UNMutableNotificationContent()
             content.title = "💧 \(med.name)"
-            var body = "Hər iki gözə 1 damcı vurmaq vaxtıdır."
+            var body = tr("Time for 1 drop in each eye.")
             if index + 1 < upcoming.count {
                 let next = upcoming[index + 1]
                 let minutes = Int(next.scheduledAt.timeIntervalSince(dose.scheduledAt) / 60)
                 if minutes <= 15, let nextMed = next.medication {
-                    body += " Sonra: \(nextMed.name) (\(minutes) dəq sonra)."
+                    body += " " + tr("Next: \(nextMed.name) (in \(minutes) min).")
                 }
             }
             content.body = body

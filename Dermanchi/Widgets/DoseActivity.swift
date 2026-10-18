@@ -10,6 +10,11 @@ struct DoseActivityAttributes: ActivityAttributes {
         var doseID: String
         var medicationID: String
         var scheduledAt: Date
+        /// Dil dəyişəndə vəziyyət də dəyişsin ki, iOS Live Activity-ni yenidən çəksin.
+        var languageCode: String
+        /// Yeniləmə anında damcının vaxtı artıq keçibsə `true`. Normalda iOS vaxt keçəndə activity-ni özü
+        /// `stale` edir; amma activity artıq vaxtı keçmiş damcı ilə başlayırsa, `stale` keçidi olmur.
+        var isOverdue: Bool
         /// Geri sayım zolağının başlanğıcı — son vurulan damcı.
         var intervalStart: Date
         var afterMedicationID: String?
@@ -33,6 +38,8 @@ struct DoseActivityAttributes: ActivityAttributes {
                 doseID: next.id.uuidString,
                 medicationID: next.medicationID,
                 scheduledAt: next.scheduledAt,
+                languageCode: L10n.language.code,
+                isOverdue: next.status(at: now) == .due,
                 // Zolağın uzunluğu ən azı 1 dəqiqə olsun.
                 intervalStart: min(start, next.scheduledAt.addingTimeInterval(-60)),
                 afterMedicationID: after?.medicationID,
@@ -53,7 +60,7 @@ struct ActivityTakenButton: View {
 
     var body: some View {
         Button(intent: MarkDoseTakenIntent(doseID: UUID(uuidString: state.doseID) ?? UUID())) {
-            Label("Vurdum", systemImage: "checkmark")
+            Label(tr("Taken"), systemImage: "checkmark")
                 .font(.system(size: compact ? 13 : 15, weight: .semibold))
                 .frame(maxWidth: compact ? nil : .infinity)
                 .padding(.vertical, compact ? 8 : 9)
@@ -97,7 +104,7 @@ struct ActivityAfterText: View {
 
     var body: some View {
         if let after = state.afterMedication, let time = state.afterScheduledAt {
-            Text("Sonra: \(after.name) \(time.hm)")
+            Text(tr("Next: \(after.name) \(time.hm)"))
                 .font(.caption)
                 .foregroundStyle(.white.opacity(0.6))
         }
@@ -115,9 +122,9 @@ struct DoseActivityLockView: View {
                 VStack(alignment: .leading, spacing: 0) {
                     HStack(spacing: 5) {
                         Image(systemName: "drop.fill").foregroundStyle(state.color)
-                        Text("\(state.name) · \(state.scheduledAt.hm)")
+                        Text(verbatim: "\(state.name) · \(state.scheduledAt.hm)")
                         if isStale {
-                            Text("İNDİ VUR")
+                            Text(tr("TAKE NOW"))
                                 .font(.caption2.weight(.bold))
                                 .foregroundStyle(.red)
                         }

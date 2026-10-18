@@ -12,6 +12,7 @@ struct DoseProvider: TimelineProvider {
     }
 
     func getSnapshot(in context: Context, completion: @escaping (DoseEntry) -> Void) {
+        LanguageModel.shared.reload()
         if context.isPreview {
             completion(DoseEntry(date: .now, state: .preview))
             return
@@ -22,6 +23,7 @@ struct DoseProvider: TimelineProvider {
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<DoseEntry>) -> Void) {
+        LanguageModel.shared.reload()
         Task { @MainActor in
             let start = Calendar.current.date(bySetting: .second, value: 0, of: .now) ?? .now
             let session = Self.latestSession()
@@ -54,11 +56,11 @@ struct DermanchiWidget: Widget {
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: "DermanchiNextDose", provider: DoseProvider()) { entry in
             DermanchiWidgetView(entry: entry)
-                .environment(\.locale, Locale(identifier: "az_AZ"))
+                .environment(\.locale, L10n.locale)
                 .containerBackground(.background, for: .widget)
         }
-        .configurationDisplayName("Növbəti damcı")
-        .description("Növbəti damcı, qalan vaxt və günün gedişatı. Damcını birbaşa buradan qeyd et.")
+        .configurationDisplayName("Next drop")
+        .description("Next drop, time left and today's progress. Mark a drop as taken right from the widget.")
         .supportedFamilies([.systemSmall, .systemMedium, .accessoryRectangular])
     }
 }
@@ -71,19 +73,19 @@ struct DermanchiWidgetBundle: WidgetBundle {
     }
 }
 
-#Preview("A · Kiçik", as: .systemSmall) {
+#Preview("A · Small", as: .systemSmall) {
     DermanchiWidget()
 } timeline: {
     DoseEntry(date: .now, state: .preview)
 }
 
-#Preview("B · Orta", as: .systemMedium) {
+#Preview("B · Medium", as: .systemMedium) {
     DermanchiWidget()
 } timeline: {
     DoseEntry(date: .now, state: .preview)
 }
 
-#Preview("F · Kilid ekranı", as: .accessoryRectangular) {
+#Preview("F · Lock Screen", as: .accessoryRectangular) {
     DermanchiWidget()
 } timeline: {
     DoseEntry(date: .now, state: .preview)
