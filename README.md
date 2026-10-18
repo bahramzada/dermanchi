@@ -76,7 +76,7 @@ On top of that, two drops should never go in back-to-back: you wait about **5 mi
 ## 🧩 Widgets
 
 <p align="center">
-  <img src="docs/screenshots/widgets.png" width="600" alt="Dərmanchı widgets: small and medium home-screen widgets showing Xiloial at 18:00 with a Taken button and per-drug progress, and a Lock Screen widget showing Xiloial at 18:00, 52 minutes left, then Moxi-R at 19:00" />
+  <img src="docs/screenshots/widgets.png" width="600" alt="Widgets: small and medium home-screen widgets showing Xiloial at 18:00 with a Taken button and per-drug progress, and a Lock Screen widget showing Xiloial at 18:00, 52 minutes left, then Moxi-R at 19:00" />
 </p>
 
 | Widget | Size | Shows |
@@ -96,7 +96,7 @@ On top of that, two drops should never go in back-to-back: you wait about **5 mi
 ## ⏳ Live Activity
 
 <p align="center">
-  <img src="docs/screenshots/live-activity.png" width="520" alt="Dərmanchı Live Activity: compact Dynamic Island with Moxi-R and a countdown, the expanded island with a Taken button, and the Lock Screen panel with a progress bar" />
+  <img src="docs/screenshots/live-activity.png" width="520" alt="Live Activity: the compact Dynamic Island with Xiloial and a countdown, the expanded island with a Taken button, and the Lock Screen panel with a progress bar" />
 </p>
 
 <p align="center">
@@ -128,11 +128,9 @@ The gear in the top-left corner opens **Settings**:
 - **Edit start time:** fix the time you took your first drop today. The rest of the day is rebuilt.
 
 <p align="center">
-  <img src="docs/screenshots/today-az.png" width="250" alt="Today screen in Azerbaijani" />
-  &nbsp;&nbsp;
   <img src="docs/screenshots/today-due.png" width="250" alt="Today screen when the next drop is overdue: red TAKE NOW label and a red late counter" />
   <br />
-  <sub>The same screen in Azerbaijani, and in English when a drop is overdue.</sub>
+  <sub>When a drop is overdue, the card turns red and counts how late it is.</sub>
 </p>
 
 Every string lives in one String Catalog, and tests fail when a translation is missing, so adding a language is mostly translating one file. See [docs/LOCALIZATION.md](docs/LOCALIZATION.md).
