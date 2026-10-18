@@ -5,7 +5,15 @@ set -e
 cd "$(dirname "$0")/.."
 DERIVED=~/Library/Developer/Xcode/DerivedData/Dermanchi-cli
 
-DEVICE=$(xcrun devicectl list devices 2>/dev/null | awk '/iPhone/ && /available|connected/ && !/unavailable/ {print $3; exit}')
+JSON=$(mktemp)
+xcrun devicectl list devices --quiet --json-output "$JSON" >/dev/null 2>&1
+DEVICE=$(python3 -c '
+import json, sys
+for d in json.load(open(sys.argv[1]))["result"]["devices"]:
+    if d["hardwareProperties"]["deviceType"] == "iPhone" and d["connectionProperties"].get("tunnelState") != "unavailable":
+        print(d["identifier"]); break
+' "$JSON")
+rm -f "$JSON"
 if [[ -z "$DEVICE" ]]; then
   echo "❌ iPhone tapılmadı. Kabellə qoş, kilidi aç və 'Bu kompüterə güvən' de."
   exit 1
