@@ -18,14 +18,17 @@
 		4695A42A552BD935F246B75D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A67ABC7D16F0DE00D19CF7C /* Assets.xcassets */; };
 		4D1776D784CA4F1388BD3A66 /* DayActionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EA7A6A29C2D69E66F04C03 /* DayActionsTests.swift */; };
 		4D85C3ABE8F7BDB7D54952C4 /* MarkDoseTakenIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22CA79656247ACB8ABAE227 /* MarkDoseTakenIntent.swift */; };
+		58EC989172C93871AFF55E12 /* WidgetViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B92764389EF953C838B4EE /* WidgetViews.swift */; };
 		6418DCE96AFA03FBD0E784AA /* MarkDoseTakenIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22CA79656247ACB8ABAE227 /* MarkDoseTakenIntent.swift */; };
 		750A15454828C1811CB5B7AC /* DermanchiApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F01D032A6E500A37861FD5 /* DermanchiApp.swift */; };
 		8CAA7C5F6E64881A9F8533AB /* DermanchiWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 6E4511A7B9743AC72FCC7073 /* DermanchiWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		8F621CCA2977D5AAB9A25B42 /* WidgetViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B92764389EF953C838B4EE /* WidgetViews.swift */; };
 		A115869475283154285A8221 /* Medication.swift in Sources */ = {isa = PBXBuildFile; fileRef = DECBDF613612E3E46ACE6679 /* Medication.swift */; };
 		A2A5AE3F778875BF94DF1B80 /* WidgetStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1EF64C1EC4D0EA17199B9ED /* WidgetStateTests.swift */; };
 		A41E928C50E2E3789D833B3A /* StartDaySheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31045F8DB88419F60B47714 /* StartDaySheet.swift */; };
 		A81F0065B2620F035EB6280F /* TodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02DAF1468B67B9358C2D682 /* TodayView.swift */; };
 		B04B5E5C3E0D288897EDB892 /* DayActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF34621ABC5BC67DDC90B355 /* DayActions.swift */; };
+		C014D504D0C684086547C9F9 /* WidgetSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70FD4179DE818E05983EDB12 /* WidgetSnapshotTests.swift */; };
 		C854EC264623937086B9385C /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7C704B79DE9903EC7A33BA /* HistoryView.swift */; };
 		DB49D0BF4F84D92FFA04F64F /* DoseScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECE088743DC342EB43ACCF5F /* DoseScheduler.swift */; };
 		DFA0D646C5B6176C20C80245 /* DayActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF34621ABC5BC67DDC90B355 /* DayActions.swift */; };
@@ -73,10 +76,12 @@
 		1FD374D576785A49F6E6D00D /* DemoData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoData.swift; sourceTree = "<group>"; };
 		29F01D032A6E500A37861FD5 /* DermanchiApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DermanchiApp.swift; sourceTree = "<group>"; };
 		47500EA9065E18D7D55E57E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		48B92764389EF953C838B4EE /* WidgetViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetViews.swift; sourceTree = "<group>"; };
 		4A5E90F028D527A786DCE9B7 /* DermanchiTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = DermanchiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6979CF66897082489DCAE4FA /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		6D7C704B79DE9903EC7A33BA /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		6E4511A7B9743AC72FCC7073 /* DermanchiWidget.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = DermanchiWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		70FD4179DE818E05983EDB12 /* WidgetSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetSnapshotTests.swift; sourceTree = "<group>"; };
 		79CAE17A9BCD5491FBC22B17 /* Formatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatting.swift; sourceTree = "<group>"; };
 		82EB6238DED3DA69F776D5B2 /* DermanchiWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DermanchiWidget.swift; sourceTree = "<group>"; };
 		8A67ABC7D16F0DE00D19CF7C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -145,6 +150,7 @@
 				ADE77F021302BF057CC2E725 /* Logic */,
 				158361E30E05BA2C88C43535 /* Model */,
 				4002A2B3B5A9BE9D38F17045 /* Views */,
+				D951B274D6D1A06057F80978 /* Widgets */,
 			);
 			path = Dermanchi;
 			sourceTree = "<group>";
@@ -173,11 +179,20 @@
 			path = Logic;
 			sourceTree = "<group>";
 		};
+		D951B274D6D1A06057F80978 /* Widgets */ = {
+			isa = PBXGroup;
+			children = (
+				48B92764389EF953C838B4EE /* WidgetViews.swift */,
+			);
+			path = Widgets;
+			sourceTree = "<group>";
+		};
 		FA9D1392C95EF2FD525BD0ED /* DermanchiTests */ = {
 			isa = PBXGroup;
 			children = (
 				C4EA7A6A29C2D69E66F04C03 /* DayActionsTests.swift */,
 				C9A8363786C5AE344A67A175 /* DoseSchedulerTests.swift */,
+				70FD4179DE818E05983EDB12 /* WidgetSnapshotTests.swift */,
 				C1EF64C1EC4D0EA17199B9ED /* WidgetStateTests.swift */,
 			);
 			path = DermanchiTests;
@@ -313,6 +328,7 @@
 			files = (
 				4D1776D784CA4F1388BD3A66 /* DayActionsTests.swift in Sources */,
 				39E939FE75CF694C9B65D0FB /* DoseSchedulerTests.swift in Sources */,
+				C014D504D0C684086547C9F9 /* WidgetSnapshotTests.swift in Sources */,
 				A2A5AE3F778875BF94DF1B80 /* WidgetStateTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -331,6 +347,7 @@
 				197B96AACDF43E540D666745 /* Models.swift in Sources */,
 				E8FECDE82F64C3CCBCC90975 /* NotificationManager.swift in Sources */,
 				DFCAAA64A5F7C287D6970203 /* WidgetState.swift in Sources */,
+				58EC989172C93871AFF55E12 /* WidgetViews.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -352,6 +369,7 @@
 				A41E928C50E2E3789D833B3A /* StartDaySheet.swift in Sources */,
 				A81F0065B2620F035EB6280F /* TodayView.swift in Sources */,
 				EFB96C4F5E042B15182FBBCF /* WidgetState.swift in Sources */,
+				8F621CCA2977D5AAB9A25B42 /* WidgetViews.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

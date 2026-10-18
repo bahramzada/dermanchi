@@ -39,6 +39,7 @@ targets:
       - DermanchiWidget
       - Dermanchi/Model
       - Dermanchi/Logic
+      - Dermanchi/Widgets
     entitlements:
       path: DermanchiWidget/DermanchiWidget.entitlements
       properties:
