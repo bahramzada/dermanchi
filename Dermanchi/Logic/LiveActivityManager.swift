@@ -37,7 +37,7 @@ enum LiveActivityManager {
         let live = activities.filter { $0.activityState == .active || $0.activityState == .stale }
 
         if let current = live.first, now.timeIntervalSince(current.attributes.startedAt) < maxAge {
-            Task { await current.update(content) }
+            enqueue { await current.update(content) }
             end(Array(live.dropFirst()))
             return
         }
@@ -54,7 +54,7 @@ enum LiveActivityManager {
             // Tətbiq növbəti dəfə açılanda yenidən cəhd olunur.
             logger.error("Live Activity failed to start: \(error.localizedDescription, privacy: .public)")
             if let current = live.first {
-                Task { await current.update(content) }
+                enqueue { await current.update(content) }
                 end(Array(live.dropFirst()))
             } else {
                 end(activities)
@@ -62,9 +62,21 @@ enum LiveActivityManager {
         }
     }
 
+    /// Yeniləmələr və bağlamalar sırayla icra olunur: ayrı `Task`-lar ard-arda gələndə köhnə vəziyyət
+    /// yenisindən sonra çatıb Live Activity-ni geri qaytara bilərdi.
+    private static var queue: Task<Void, Never>?
+
+    private static func enqueue(_ work: @escaping @MainActor () async -> Void) {
+        let previous = queue
+        queue = Task {
+            await previous?.value
+            await work()
+        }
+    }
+
     private static func end(_ activities: [Activity<DoseActivityAttributes>]) {
         for activity in activities {
-            Task { await activity.end(nil, dismissalPolicy: .immediate) }
+            enqueue { await activity.end(nil, dismissalPolicy: .immediate) }
         }
     }
 }
