@@ -26,29 +26,18 @@ final class WidgetSnapshotTests: XCTestCase {
         return DoseEntry(date: now, state: .preview(at: now))
     }
 
-    func testRenderHomeWidgets() throws {
-        try render(homeWidget(SmallView(entry: entry), size: CGSize(width: 170, height: 170)),
-                   name: "widget-small.png")
-        try render(homeWidget(MediumView(entry: entry), size: CGSize(width: 364, height: 170)),
-                   name: "widget-medium.png")
-    }
-
-    func testRenderLockScreenWidget() throws {
-        let lock = LockRectangularView(entry: entry)
-            .frame(width: 172, height: 76)
-            .padding(.horizontal, 12)
-            .background(.white.opacity(0.14), in: RoundedRectangle(cornerRadius: 16, style: .continuous))
-            .foregroundStyle(.white)
-            .environment(\.colorScheme, .dark)
-            .padding(.vertical, 26)
-            .padding(.horizontal, 28)
-            .background(
-                LinearGradient(colors: [Color(red: 0.10, green: 0.14, blue: 0.22),
-                                        Color(red: 0.04, green: 0.06, blue: 0.11)],
-                               startPoint: .topLeading, endPoint: .bottomTrailing),
-                in: RoundedRectangle(cornerRadius: 26, style: .continuous))
-            .padding(20)
-        try render(lock, name: "widget-lock.png")
+    /// Hər üç widget bir şəkildə: yuxarıda kiçik və orta, aşağıda kilid ekranı.
+    /// Tək şəkil GitHub-da həm kompüterdə, həm telefonda bütöv miqyaslanır.
+    func testRenderWidgetShowcase() throws {
+        let showcase = VStack(spacing: 22) {
+            HStack(alignment: .top, spacing: 22) {
+                homeWidget(SmallView(entry: entry), size: CGSize(width: 170, height: 170))
+                homeWidget(MediumView(entry: entry), size: CGSize(width: 364, height: 170))
+            }
+            lockWidget(LockRectangularView(entry: entry))
+        }
+        .padding(24)
+        try render(showcase, name: "widgets.png")
     }
 
     // MARK: - Köməkçilər
@@ -60,7 +49,26 @@ final class WidgetSnapshotTests: XCTestCase {
             .background(.white, in: RoundedRectangle(cornerRadius: 24, style: .continuous))
             .environment(\.colorScheme, .light)
             .shadow(color: .black.opacity(0.18), radius: 14, y: 5)
-            .padding(20)
+    }
+
+    /// Kilid ekranı widget-i tünd divar kağızı fonunda.
+    private func lockWidget<V: View>(_ view: V) -> some View {
+        view
+            .frame(width: 172, height: 76)
+            .padding(.horizontal, 12)
+            .background(.white.opacity(0.14), in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+            .foregroundStyle(.white)
+            .environment(\.colorScheme, .dark)
+            .padding(.vertical, 22)
+            .frame(width: 556)
+            .background(
+                LinearGradient(colors: [Color(red: 0.10, green: 0.14, blue: 0.22),
+                                        Color(red: 0.04, green: 0.06, blue: 0.11)],
+                               startPoint: .topLeading, endPoint: .bottomTrailing),
+                in: RoundedRectangle(cornerRadius: 24, style: .continuous))
+            .overlay(RoundedRectangle(cornerRadius: 24, style: .continuous)
+                .strokeBorder(.white.opacity(0.12), lineWidth: 1))
+            .shadow(color: .black.opacity(0.18), radius: 14, y: 5)
     }
 
     private func render<V: View>(_ view: V, name: String) throws {
