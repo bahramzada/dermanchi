@@ -67,27 +67,33 @@ enum NotificationManager {
     }
 }
 
-/// Tətbiq açıq olanda da bildirişləri göstərir.
+/// Tətbiq açıq olanda da bildirişləri göstərir və bildiriş düymələrini emal edir.
+/// Completion handler versiyası istifadə olunur: `async` versiyada iOS cavabı əsas thread-dən
+/// kənarda qaytarır və UIKit tətbiqi arxa planda dayandırır (SIGABRT).
 final class NotificationDelegate: NSObject, UNUserNotificationCenterDelegate {
     static let shared = NotificationDelegate()
 
     func userNotificationCenter(
         _ center: UNUserNotificationCenter,
-        willPresent notification: UNNotification
-    ) async -> UNNotificationPresentationOptions {
-        [.banner, .sound, .list]
+        willPresent notification: UNNotification,
+        withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
+    ) {
+        completionHandler([.banner, .sound, .list])
     }
 
     /// Bildirişdəki düymə basılanda (tətbiq bağlı olsa belə arxa planda işə düşür).
     func userNotificationCenter(
         _ center: UNUserNotificationCenter,
-        didReceive response: UNNotificationResponse
-    ) async {
-        guard let raw = response.notification.request.content.userInfo["doseID"] as? String,
-              let doseID = UUID(uuidString: raw) else { return }
+        didReceive response: UNNotificationResponse,
+        withCompletionHandler completionHandler: @escaping () -> Void
+    ) {
+        let raw = response.notification.request.content.userInfo["doseID"] as? String
         let actionID = response.actionIdentifier
-        await MainActor.run {
-            DayActions.handleNotificationAction(actionID, doseID: doseID, context: AppModel.container.mainContext)
+        DispatchQueue.main.async {
+            if let raw, let doseID = UUID(uuidString: raw) {
+                DayActions.handleNotificationAction(actionID, doseID: doseID, context: AppModel.container.mainContext)
+            }
+            completionHandler()
         }
     }
 }
