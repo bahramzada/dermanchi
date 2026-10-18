@@ -12,6 +12,21 @@ final class DoseSchedulerTests: XCTestCase {
     private var moxi: Medication { Medication.with(id: "moxi-r")! }
     private var maxidex: Medication { Medication.with(id: "maxidex")! }
 
+    func testMatchPairsSameMedicationByNearestTimeOnce() {
+        let old = [("xiloial", date(10, 18, 12)), ("xiloial", date(10, 18, 14)), ("moxi-r", date(10, 18, 12, 5))]
+        // Başlanğıc 2 saat tezə çəkilib: yeni 10:00 dozasının qarşılığı yoxdur (ən yaxın köhnə 12:00 çox uzaqdır).
+        let new = [("xiloial", date(10, 18, 10)), ("xiloial", date(10, 18, 12)), ("xiloial", date(10, 18, 14)),
+                   ("moxi-r", date(10, 18, 12, 10))]
+        XCTAssertEqual(DoseScheduler.match(previous: old, planned: new), [nil, 0, 1, 2])
+    }
+
+    func testMatchDoesNotReuseAnOldDose() {
+        let old = [("xiloial", date(10, 18, 12))]
+        let new = [("xiloial", date(10, 18, 11)), ("xiloial", date(10, 18, 12, 30))]
+        // Hər ikisi 1 saat daxilindədir, amma köhnə doza yalnız bir yeniyə düşür.
+        XCTAssertEqual(DoseScheduler.match(previous: old, planned: new).compactMap { $0 }.count, 1)
+    }
+
     func testMaxidexTaper() {
         XCTAssertEqual(maxidex.dailyDoses(on: date(10, 14)), .inactive)
         XCTAssertEqual(maxidex.dailyDoses(on: date(10, 15)), .count(5))

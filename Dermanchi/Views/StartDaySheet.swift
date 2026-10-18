@@ -83,6 +83,11 @@ struct StartDaySheet: View {
     private func pastDoseCount(now: Date) -> Int {
         let planned = DoseScheduler.plan(start: start, firstMedicationID: firstID)
         let times = DoseScheduler.stagger(planned.map(\.plannedAt), after: nil)
-        return times.filter { $0 <= now }.count
+        // Düzəliş rejimində köhnə gündə qarşılığı olan dozaların qeydi olduğu kimi qalır, onlar sayılmır.
+        let carried = replacing.map { old in
+            DoseScheduler.match(previous: old.doses.map { ($0.medicationID, $0.plannedAt) },
+                                planned: planned.map { ($0.medicationID, $0.plannedAt) })
+        } ?? Array(repeating: nil, count: planned.count)
+        return times.indices.filter { times[$0] <= now && ($0 == 0 || carried[$0] == nil) }.count
     }
 }

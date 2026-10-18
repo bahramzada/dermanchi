@@ -46,6 +46,25 @@ enum DoseScheduler {
         return result.sorted { ($0.plannedAt, $0.priority) < ($1.plannedAt, $1.priority) }
     }
 
+    /// Başlanğıc vaxtı düzəldiləndə yeni cədvəldəki hər dozanı köhnə günün dozası ilə əlaqələndirir:
+    /// eyni dərman, ən yaxın planlanmış vaxt (yarım interval daxilində), hər köhnə doza yalnız bir dəfə.
+    /// Nəticənin `i`-ci elementi `planned[i]`-nin köhnə qarşılığının `previous`-dakı indeksidir (yoxdursa `nil`).
+    static func match(
+        previous: [(medicationID: String, plannedAt: Date)],
+        planned: [(medicationID: String, plannedAt: Date)]
+    ) -> [Int?] {
+        var free = Array(previous.indices)
+        return planned.map { dose in
+            let tolerance = (Medication.with(id: dose.medicationID)?.interval ?? 0) / 2
+            func distance(_ i: Int) -> TimeInterval { abs(previous[i].plannedAt.timeIntervalSince(dose.plannedAt)) }
+            let best = free
+                .filter { previous[$0].medicationID == dose.medicationID && distance($0) <= tolerance }
+                .min { distance($0) < distance($1) }
+            if let best { free.removeAll { $0 == best } }
+            return best
+        }
+    }
+
     /// Planlanmış vaxtları elə sürüşdürür ki, ardıcıl damcılar arasında ən azı `gap` olsun.
     /// Heç bir doza planlanmış vaxtından və ya `anchor + gap`-dan tez qoyulmur.
     static func stagger(_ planned: [Date], after anchor: Date?) -> [Date] {

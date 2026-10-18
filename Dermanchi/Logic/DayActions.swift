@@ -37,19 +37,14 @@ enum DayActions {
         }
         // Başlanğıc vaxtı düzəldiləndə hər yeni doza eyni dərmanın ən yaxın köhnə dozası ilə (yarım interval
         // daxilində) əlaqələndirilir və onun qeydi olduğu kimi qalır.
-        var unmatched = previous
+        let matches = DoseScheduler.match(
+            previous: previous.map { ($0.id, $0.plannedAt) },
+            planned: doses.map { ($0.medicationID, $0.plannedAt) })
         var carriedOver = Set<UUID>()
-        for dose in doses {
-            let tolerance = (dose.medication?.interval ?? 0) / 2
-            let candidates = unmatched.enumerated().filter {
-                $0.element.id == dose.medicationID && abs($0.element.plannedAt.timeIntervalSince(dose.plannedAt)) <= tolerance
-            }
-            guard let best = candidates.min(by: {
-                abs($0.element.plannedAt.timeIntervalSince(dose.plannedAt)) < abs($1.element.plannedAt.timeIntervalSince(dose.plannedAt))
-            }) else { continue }
-            dose.takenAt = best.element.takenAt
+        for (dose, match) in zip(doses, matches) {
+            guard let match else { continue }
+            dose.takenAt = previous[match].takenAt
             carriedOver.insert(dose.id)
-            unmatched.remove(at: best.offset)
         }
         if markPastAsTaken {
             for dose in doses where dose.scheduledAt <= now && !carriedOver.contains(dose.id) {
