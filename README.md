@@ -70,13 +70,11 @@ On top of that, two drops should never go in back-to-back: you wait about **5 mi
 
 ## 🧩 Widgets
 
-<div align="center">
-
-| Small · Next drop | Medium · Day progress | Lock Screen |
-| :---: | :---: | :---: |
-| <img src="docs/screenshots/widget-small.png" width="170" alt="Small widget: next drop Xiloial at 18:00 with a Vurdum button" /> | <img src="docs/screenshots/widget-medium.png" width="330" alt="Medium widget: next drop plus progress bars for each drug" /> | <img src="docs/screenshots/widget-lock.png" width="240" alt="Lock Screen widget: Xiloial at 18:00, 52 minutes left, then Moxi-R at 19:00" /> |
-
-</div>
+<p align="center">
+  <img src="docs/screenshots/widget-small.png" width="170" alt="Small widget: next drop Xiloial at 18:00 with a Vurdum button" />
+  <img src="docs/screenshots/widget-medium.png" width="330" alt="Medium widget: next drop plus progress bars for each drug" />
+  <img src="docs/screenshots/widget-lock.png" width="240" alt="Lock Screen widget: Xiloial at 18:00, 52 minutes left, then Moxi-R at 19:00" />
+</p>
 
 | Widget | Size | Shows |
 | --- | --- | --- |
