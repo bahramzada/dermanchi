@@ -1,6 +1,7 @@
 import SwiftData
 import SwiftUI
 import UserNotifications
+import WidgetKit
 
 @main
 struct DermanchiApp: App {
@@ -35,7 +36,10 @@ struct RootView: View {
             await NotificationManager.requestAuthorization()
         }
         .onChange(of: scenePhase) { _, phase in
-            if phase == .active { NotificationManager.sync(context: context) }
+            if phase == .active {
+                NotificationManager.sync(context: context)
+                WidgetCenter.shared.reloadAllTimelines()
+            }
         }
     }
 }

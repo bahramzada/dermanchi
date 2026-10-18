@@ -1,5 +1,6 @@
 import Foundation
 import SwiftData
+import WidgetKit
 
 @MainActor
 enum DayActions {
@@ -121,5 +122,6 @@ enum DayActions {
     private static func save(_ context: ModelContext) {
         try? context.save()
         NotificationManager.sync(context: context)
+        WidgetCenter.shared.reloadAllTimelines()
     }
 }

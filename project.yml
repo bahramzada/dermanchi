@@ -16,6 +16,12 @@ targets:
     type: application
     platform: iOS
     sources: [Dermanchi]
+    entitlements:
+      path: Dermanchi/Dermanchi.entitlements
+      properties:
+        com.apple.security.application-groups: [group.com.raullte.dermanchi]
+    dependencies:
+      - target: DermanchiWidget
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.raullte.dermanchi
@@ -26,6 +32,28 @@ targets:
         INFOPLIST_KEY_UISupportedInterfaceOrientations: UIInterfaceOrientationPortrait
         TARGETED_DEVICE_FAMILY: "1"
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+  DermanchiWidget:
+    type: app-extension
+    platform: iOS
+    sources:
+      - DermanchiWidget
+      - Dermanchi/Model
+      - Dermanchi/Logic
+    entitlements:
+      path: DermanchiWidget/DermanchiWidget.entitlements
+      properties:
+        com.apple.security.application-groups: [group.com.raullte.dermanchi]
+    info:
+      path: DermanchiWidget/Info.plist
+      properties:
+        CFBundleDisplayName: Dərmanchı
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.raullte.dermanchi.widget
+        GENERATE_INFOPLIST_FILE: NO
+        TARGETED_DEVICE_FAMILY: "1"
   DermanchiTests:
     type: bundle.unit-test
     platform: iOS

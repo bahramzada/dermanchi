@@ -3,14 +3,59 @@ import SwiftData
 
 @MainActor
 enum AppModel {
-    /// Tətbiq və bildiriş düymələri eyni məlumat bazasını istifadə edir.
+    nonisolated static let appGroupID = "group.com.raullte.dermanchi"
+    nonisolated private static let migratedKey = "legacyStoreMigrated"
+
+    /// Məlumat bazası App Group-dadır ki, widget də oxuya bilsin.
+    static var storeURL: URL? {
+        FileManager.default
+            .containerURL(forSecurityApplicationGroupIdentifier: appGroupID)?
+            .appending(path: "Dermanchi.store")
+    }
+
+    static var isExtension: Bool { Bundle.main.bundlePath.hasSuffix(".appex") }
+
+    /// Tətbiq, bildiriş düymələri və widget eyni məlumat bazasını istifadə edir.
     static let container: ModelContainer = {
+        let schema = Schema([DaySession.self, Dose.self])
         do {
-            return try ModelContainer(for: DaySession.self, Dose.self)
+            guard let url = storeURL else {
+                return try ModelContainer(for: schema)
+            }
+            if !isExtension { migrateLegacyStoreIfNeeded(to: url) }
+            return try ModelContainer(for: schema, configurations: ModelConfiguration(schema: schema, url: url))
         } catch {
             fatalError("SwiftData açılmadı: \(error)")
         }
     }()
+
+    /// Widget-dən əvvəlki versiyalar məlumatı tətbiqin öz qovluğunda saxlayırdı
+    /// (Application Support/default.store). Bir dəfəlik App Group-a köçürülür.
+    private static func migrateLegacyStoreIfNeeded(to url: URL) {
+        let fm = FileManager.default
+        let defaults = UserDefaults(suiteName: appGroupID)
+        guard defaults?.bool(forKey: migratedKey) != true else { return }
+        defer { defaults?.set(true, forKey: migratedKey) }
+
+        guard let support = fm.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else { return }
+        let legacy = support.appending(path: "default.store")
+        guard fm.fileExists(atPath: legacy.path) else { return }
+
+        let suffixes = ["", "-shm", "-wal"]
+        for suffix in suffixes {
+            try? fm.removeItem(at: URL(fileURLWithPath: url.path + suffix))
+        }
+        for suffix in suffixes {
+            let src = URL(fileURLWithPath: legacy.path + suffix)
+            guard fm.fileExists(atPath: src.path) else { continue }
+            try? fm.copyItem(at: src, to: URL(fileURLWithPath: url.path + suffix))
+        }
+    }
+
+    /// Widget bazaya yalnız tətbiq köçürməni bitirəndən sonra toxunur.
+    nonisolated static var isStoreReady: Bool {
+        UserDefaults(suiteName: appGroupID)?.bool(forKey: migratedKey) == true
+    }
 }
 
 /// "Günə başla" ilə "Yatıram" arasındakı bir gün.
