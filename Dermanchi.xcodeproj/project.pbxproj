@@ -7,12 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		065E69684E8E341A0DB8450D /* LiveActivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40F4C50B67F79630A106FA7 /* LiveActivityManager.swift */; };
 		0EEBB6BBF744E88D0E311854 /* DemoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD374D576785A49F6E6D00D /* DemoData.swift */; };
+		18B2D4B8452CF655EE4B37E8 /* DoseActivityStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DD5CC595F54974EFB0B9EF /* DoseActivityStateTests.swift */; };
 		197B96AACDF43E540D666745 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6979CF66897082489DCAE4FA /* Models.swift */; };
 		2DD2418ACF3A4A61861FC191 /* DoseScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECE088743DC342EB43ACCF5F /* DoseScheduler.swift */; };
+		39C75148F3E287D321D0A55A /* DoseActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B16380F6D6C937E8B16242 /* DoseActivity.swift */; };
 		39E939FE75CF694C9B65D0FB /* DoseSchedulerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A8363786C5AE344A67A175 /* DoseSchedulerTests.swift */; };
 		3A4E48C04FDE6E2599C15AE4 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6979CF66897082489DCAE4FA /* Models.swift */; };
 		4054C38A87F84A1FC66CF822 /* Formatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79CAE17A9BCD5491FBC22B17 /* Formatting.swift */; };
+		4238B752ED5F141F10CBA021 /* DoseActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B16380F6D6C937E8B16242 /* DoseActivity.swift */; };
 		44C1CAD9D3B9FEEFEC9A2AB2 /* MedicationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D682727A7265C94088B0CE53 /* MedicationsView.swift */; };
 		46816F5D9C1889FB1CE539E1 /* Medication.swift in Sources */ = {isa = PBXBuildFile; fileRef = DECBDF613612E3E46ACE6679 /* Medication.swift */; };
 		4695A42A552BD935F246B75D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A67ABC7D16F0DE00D19CF7C /* Assets.xcassets */; };
@@ -25,6 +29,7 @@
 		8F621CCA2977D5AAB9A25B42 /* WidgetViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B92764389EF953C838B4EE /* WidgetViews.swift */; };
 		A115869475283154285A8221 /* Medication.swift in Sources */ = {isa = PBXBuildFile; fileRef = DECBDF613612E3E46ACE6679 /* Medication.swift */; };
 		A2A5AE3F778875BF94DF1B80 /* WidgetStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1EF64C1EC4D0EA17199B9ED /* WidgetStateTests.swift */; };
+		A2F458EEC3CAE856B5FC6BA1 /* LiveActivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40F4C50B67F79630A106FA7 /* LiveActivityManager.swift */; };
 		A41E928C50E2E3789D833B3A /* StartDaySheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31045F8DB88419F60B47714 /* StartDaySheet.swift */; };
 		A81F0065B2620F035EB6280F /* TodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02DAF1468B67B9358C2D682 /* TodayView.swift */; };
 		B04B5E5C3E0D288897EDB892 /* DayActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF34621ABC5BC67DDC90B355 /* DayActions.swift */; };
@@ -38,6 +43,7 @@
 		E6935D27E33C759F53451938 /* Formatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79CAE17A9BCD5491FBC22B17 /* Formatting.swift */; };
 		E8FECDE82F64C3CCBCC90975 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A505565E91273172C36E205F /* NotificationManager.swift */; };
 		EFB96C4F5E042B15182FBBCF /* WidgetState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1FA2FC3C641F48A15E5AC77 /* WidgetState.swift */; };
+		F1C1939F0CCA560A7F24F313 /* DoseLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D416B59467731F0161371E /* DoseLiveActivity.swift */; };
 		F20B14805DA65378A3DF39B6 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A505565E91273172C36E205F /* NotificationManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -78,10 +84,12 @@
 		47500EA9065E18D7D55E57E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		48B92764389EF953C838B4EE /* WidgetViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetViews.swift; sourceTree = "<group>"; };
 		4A5E90F028D527A786DCE9B7 /* DermanchiTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = DermanchiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		65DD5CC595F54974EFB0B9EF /* DoseActivityStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoseActivityStateTests.swift; sourceTree = "<group>"; };
 		6979CF66897082489DCAE4FA /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		6D7C704B79DE9903EC7A33BA /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		6E4511A7B9743AC72FCC7073 /* DermanchiWidget.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = DermanchiWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		70FD4179DE818E05983EDB12 /* WidgetSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetSnapshotTests.swift; sourceTree = "<group>"; };
+		76B16380F6D6C937E8B16242 /* DoseActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoseActivity.swift; sourceTree = "<group>"; };
 		79CAE17A9BCD5491FBC22B17 /* Formatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatting.swift; sourceTree = "<group>"; };
 		82EB6238DED3DA69F776D5B2 /* DermanchiWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DermanchiWidget.swift; sourceTree = "<group>"; };
 		8A67ABC7D16F0DE00D19CF7C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -95,11 +103,13 @@
 		CE7B9AF4D93BC58A8E82B445 /* Dermanchi.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Dermanchi.entitlements; sourceTree = "<group>"; };
 		D1905858AF7AF0BF331B03B9 /* Dermanchi.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Dermanchi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D31045F8DB88419F60B47714 /* StartDaySheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartDaySheet.swift; sourceTree = "<group>"; };
+		D40F4C50B67F79630A106FA7 /* LiveActivityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveActivityManager.swift; sourceTree = "<group>"; };
 		D682727A7265C94088B0CE53 /* MedicationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicationsView.swift; sourceTree = "<group>"; };
 		DECBDF613612E3E46ACE6679 /* Medication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Medication.swift; sourceTree = "<group>"; };
 		E22CA79656247ACB8ABAE227 /* MarkDoseTakenIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkDoseTakenIntent.swift; sourceTree = "<group>"; };
 		ECE088743DC342EB43ACCF5F /* DoseScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoseScheduler.swift; sourceTree = "<group>"; };
 		F02DAF1468B67B9358C2D682 /* TodayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayView.swift; sourceTree = "<group>"; };
+		F2D416B59467731F0161371E /* DoseLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoseLiveActivity.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -117,6 +127,7 @@
 			children = (
 				8EB4CFDF13D4A8D0830002DD /* DermanchiWidget.entitlements */,
 				82EB6238DED3DA69F776D5B2 /* DermanchiWidget.swift */,
+				F2D416B59467731F0161371E /* DoseLiveActivity.swift */,
 				47500EA9065E18D7D55E57E0 /* Info.plist */,
 			);
 			path = DermanchiWidget;
@@ -172,6 +183,7 @@
 				1FD374D576785A49F6E6D00D /* DemoData.swift */,
 				ECE088743DC342EB43ACCF5F /* DoseScheduler.swift */,
 				79CAE17A9BCD5491FBC22B17 /* Formatting.swift */,
+				D40F4C50B67F79630A106FA7 /* LiveActivityManager.swift */,
 				E22CA79656247ACB8ABAE227 /* MarkDoseTakenIntent.swift */,
 				A505565E91273172C36E205F /* NotificationManager.swift */,
 				C1FA2FC3C641F48A15E5AC77 /* WidgetState.swift */,
@@ -182,6 +194,7 @@
 		D951B274D6D1A06057F80978 /* Widgets */ = {
 			isa = PBXGroup;
 			children = (
+				76B16380F6D6C937E8B16242 /* DoseActivity.swift */,
 				48B92764389EF953C838B4EE /* WidgetViews.swift */,
 			);
 			path = Widgets;
@@ -191,6 +204,7 @@
 			isa = PBXGroup;
 			children = (
 				C4EA7A6A29C2D69E66F04C03 /* DayActionsTests.swift */,
+				65DD5CC595F54974EFB0B9EF /* DoseActivityStateTests.swift */,
 				C9A8363786C5AE344A67A175 /* DoseSchedulerTests.swift */,
 				70FD4179DE818E05983EDB12 /* WidgetSnapshotTests.swift */,
 				C1EF64C1EC4D0EA17199B9ED /* WidgetStateTests.swift */,
@@ -327,6 +341,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4D1776D784CA4F1388BD3A66 /* DayActionsTests.swift in Sources */,
+				18B2D4B8452CF655EE4B37E8 /* DoseActivityStateTests.swift in Sources */,
 				39E939FE75CF694C9B65D0FB /* DoseSchedulerTests.swift in Sources */,
 				C014D504D0C684086547C9F9 /* WidgetSnapshotTests.swift in Sources */,
 				A2A5AE3F778875BF94DF1B80 /* WidgetStateTests.swift in Sources */,
@@ -340,8 +355,11 @@
 				B04B5E5C3E0D288897EDB892 /* DayActions.swift in Sources */,
 				0EEBB6BBF744E88D0E311854 /* DemoData.swift in Sources */,
 				E13CDE2B0C6A525AC88D6AE3 /* DermanchiWidget.swift in Sources */,
+				39C75148F3E287D321D0A55A /* DoseActivity.swift in Sources */,
+				F1C1939F0CCA560A7F24F313 /* DoseLiveActivity.swift in Sources */,
 				2DD2418ACF3A4A61861FC191 /* DoseScheduler.swift in Sources */,
 				E6935D27E33C759F53451938 /* Formatting.swift in Sources */,
+				065E69684E8E341A0DB8450D /* LiveActivityManager.swift in Sources */,
 				4D85C3ABE8F7BDB7D54952C4 /* MarkDoseTakenIntent.swift in Sources */,
 				A115869475283154285A8221 /* Medication.swift in Sources */,
 				197B96AACDF43E540D666745 /* Models.swift in Sources */,
@@ -358,9 +376,11 @@
 				DFA0D646C5B6176C20C80245 /* DayActions.swift in Sources */,
 				E464A159CD55FDBF44B40123 /* DemoData.swift in Sources */,
 				750A15454828C1811CB5B7AC /* DermanchiApp.swift in Sources */,
+				4238B752ED5F141F10CBA021 /* DoseActivity.swift in Sources */,
 				DB49D0BF4F84D92FFA04F64F /* DoseScheduler.swift in Sources */,
 				4054C38A87F84A1FC66CF822 /* Formatting.swift in Sources */,
 				C854EC264623937086B9385C /* HistoryView.swift in Sources */,
+				A2F458EEC3CAE856B5FC6BA1 /* LiveActivityManager.swift in Sources */,
 				6418DCE96AFA03FBD0E784AA /* MarkDoseTakenIntent.swift in Sources */,
 				46816F5D9C1889FB1CE539E1 /* Medication.swift in Sources */,
 				44C1CAD9D3B9FEEFEC9A2AB2 /* MedicationsView.swift in Sources */,
@@ -436,6 +456,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.raullte.dermanchi.widget;
 				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) WIDGET_EXTENSION";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -448,6 +469,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Dərmanchı";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -474,6 +496,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.raullte.dermanchi.widget;
 				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) WIDGET_EXTENSION";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
@@ -546,6 +569,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Dərmanchı";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (

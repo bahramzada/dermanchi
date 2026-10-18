@@ -67,6 +67,7 @@ struct DermanchiWidget: Widget {
 struct DermanchiWidgetBundle: WidgetBundle {
     var body: some Widget {
         DermanchiWidget()
+        DoseLiveActivity()
     }
 }
 

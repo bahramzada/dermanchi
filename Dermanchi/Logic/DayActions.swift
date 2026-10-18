@@ -123,5 +123,8 @@ enum DayActions {
         try? context.save()
         NotificationManager.sync(context: context)
         WidgetCenter.shared.reloadAllTimelines()
+        #if !WIDGET_EXTENSION
+        LiveActivityManager.sync(context: context)
+        #endif
     }
 }

@@ -39,6 +39,7 @@ struct RootView: View {
             if phase == .active {
                 NotificationManager.sync(context: context)
                 WidgetCenter.shared.reloadAllTimelines()
+                LiveActivityManager.sync(context: context)
             }
         }
     }
