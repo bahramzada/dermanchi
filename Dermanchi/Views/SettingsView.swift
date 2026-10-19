@@ -19,6 +19,7 @@ struct SettingsView: View {
                 languageSection
                 liveActivitySection
                 daySection
+                BackupSection()
                 aboutSection
             }
             // Açılanda dərhal başlayır (tətbiq önplandadır), söndürəndə dərhal bağlanır.

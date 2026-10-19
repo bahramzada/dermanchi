@@ -144,6 +144,40 @@
         }
       }
     },
+    "Choose file": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose file"
+          }
+        },
+        "az": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fayl seç"
+          }
+        }
+      }
+    },
+    "Could not read this file.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Could not read this file."
+          }
+        },
+        "az": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bu faylı oxumaq mümkün olmadı."
+          }
+        }
+      }
+    },
     "Count past drops as taken": {
       "extractionState": "manual",
       "localizations": {
@@ -174,6 +208,23 @@
           "stringUnit": {
             "state": "translated",
             "value": "Növbəti damcıya geri sayımı göstərir. Söndürəndə dərhal yox olur. Live Activity-ləri iPhone-un Ayarlarından da idarə etmək olar."
+          }
+        }
+      }
+    },
+    "Data": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Data"
+          }
+        },
+        "az": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Məlumat"
           }
         }
       }
@@ -225,6 +276,23 @@
           "stringUnit": {
             "state": "translated",
             "value": "Gün başlamayıb"
+          }
+        }
+      }
+    },
+    "Days restored: %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Days restored: %lld"
+          }
+        },
+        "az": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bərpa olunan gün sayı: %lld"
           }
         }
       }
@@ -406,6 +474,40 @@
         }
       }
     },
+    "Everything in the app is replaced by the contents of the file you choose.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Everything in the app is replaced by the contents of the file you choose."
+          }
+        },
+        "az": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tətbiqdəki hər şey seçdiyin faylın məzmunu ilə əvəz olunacaq."
+          }
+        }
+      }
+    },
+    "Export data": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Export data"
+          }
+        },
+        "az": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Məlumatı ixrac et"
+          }
+        }
+      }
+    },
     "First drop": {
       "extractionState": "manual",
       "localizations": {
@@ -543,6 +645,23 @@
           "stringUnit": {
             "state": "translated",
             "value": "Tarixçə"
+          }
+        }
+      }
+    },
+    "Import data": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Import data"
+          }
+        },
+        "az": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Məlumatı idxal et"
           }
         }
       }
@@ -917,6 +1036,40 @@
           "stringUnit": {
             "state": "translated",
             "value": "10 dəq sonra xatırlat"
+          }
+        }
+      }
+    },
+    "Replace all data?": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Replace all data?"
+          }
+        },
+        "az": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bütün məlumat əvəz edilsin?"
+          }
+        }
+      }
+    },
+    "Save every day and drop to a file, or restore them from one. Use this to move to a new iPhone.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save every day and drop to a file, or restore them from one. Use this to move to a new iPhone."
+          }
+        },
+        "az": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bütün günləri və damcıları fayla yaz və ya fayldan bərpa et. Yeni iPhone-a keçmək üçün istifadə et."
           }
         }
       }
