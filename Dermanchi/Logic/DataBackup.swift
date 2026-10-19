@@ -11,6 +11,8 @@ enum DataBackup {
         var version: Int
         var exportedAt: Date
         var sessions: [SessionRecord]
+        /// Missing in older files: the current medications are kept then.
+        var medications: [Medication]?
     }
 
     struct SessionRecord: Codable {
@@ -39,7 +41,7 @@ enum DataBackup {
                 DoseRecord(id: $0.id, medicationID: $0.medicationID, priority: $0.priority, plannedAt: $0.plannedAt,
                            scheduledAt: $0.scheduledAt, takenAt: $0.takenAt, snoozedUntil: $0.snoozedUntil)
             })
-        })
+        }, medications: MedicationStore.current)
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .iso8601
         encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
@@ -56,6 +58,7 @@ enum DataBackup {
         let file = try decoder.decode(File.self, from: data)
         guard file.version == version else { throw UnsupportedVersion() }
 
+        if let medications = file.medications { MedicationStore.save(medications) }
         try context.delete(model: DaySession.self)
         for record in file.sessions {
             let session = DaySession(startedAt: record.startedAt)

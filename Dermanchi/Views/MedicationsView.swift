@@ -1,12 +1,19 @@
 import SwiftUI
 
 struct MedicationsView: View {
+    @State private var editing: Medication?
+    @State private var adding = false
+
     var body: some View {
         NavigationStack {
             List {
                 ForEach(Medication.all) { med in
                     Section {
-                        MedicationDetail(medication: med, now: .now)
+                        Button { editing = med } label: {
+                            MedicationDetail(medication: med, now: .now)
+                                .contentShape(Rectangle())
+                        }
+                        .buttonStyle(.plain)
                     }
                 }
                 Section {
@@ -16,6 +23,14 @@ struct MedicationsView: View {
                 }
             }
             .navigationTitle(tr("Medications"))
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button { adding = true } label: { Image(systemName: "plus") }
+                        .accessibilityLabel("New medication")
+                }
+            }
+            .sheet(item: $editing) { MedicationEditor(medication: $0) }
+            .sheet(isPresented: $adding) { MedicationEditor(medication: nil) }
         }
     }
 }
@@ -25,9 +40,8 @@ private struct MedicationDetail: View {
     let now: Date
 
     var body: some View {
-        let total = medication.totalDays()
+        let total = medication.totalDays
         let day = medication.dayNumber(on: now)
-        let lastDay = Calendar.current.date(byAdding: .day, value: -1, to: medication.endDate)!
         VStack(alignment: .leading, spacing: 10) {
             HStack {
                 Circle().fill(medication.color).frame(width: 14, height: 14)
@@ -40,27 +54,30 @@ private struct MedicationDetail: View {
                         .font(.subheadline.monospacedDigit())
                 }
             }
-            ProgressView(value: Double(min(max(day, 0), total)), total: Double(total))
+            ProgressView(value: Double(min(max(day, 0), total)), total: Double(max(total, 1)))
                 .tint(medication.color)
             Text(medication.scheduleDescription(on: now))
                 .font(.subheadline)
-            Text(verbatim: "\(medication.startDate.shortDay) – \(lastDay.shortDay)")
+            Text(verbatim: "\(medication.startDate.shortDay) – \(medication.lastDay().shortDay)")
                 .font(.caption)
                 .foregroundStyle(.secondary)
 
-            if case .taper(let start, let step) = medication.rule {
+            if medication.phases.count > 1 {
+                let current = medication.phaseIndex(on: now)
                 VStack(alignment: .leading, spacing: 4) {
-                    ForEach(0..<start, id: \.self) { stage in
-                        let from = Calendar.current.date(byAdding: .day, value: stage * step, to: medication.startDate)!
-                        let to = Calendar.current.date(byAdding: .day, value: step - 1, to: from)!
-                        let current = (day - 1) / step == stage
+                    ForEach(medication.phases.indices, id: \.self) { index in
+                        let range = medication.range(ofPhase: index)
                         HStack {
-                            Text(verbatim: "\(from.shortDay) – \(to.shortDay)")
+                            Text(verbatim: "\(range.from.shortDay) – \(range.to.shortDay)")
                             Spacer()
-                            Text("\(start - stage) times a day")
+                            if let drops = medication.phases[index].drops {
+                                Text("\(drops) times a day")
+                            } else {
+                                Text("until bedtime")
+                            }
                         }
-                        .font(.caption.weight(current ? .bold : .regular))
-                        .foregroundStyle(current ? medication.color : .secondary)
+                        .font(.caption.weight(index == current ? .bold : .regular))
+                        .foregroundStyle(index == current ? medication.color : .secondary)
                     }
                 }
                 .padding(.top, 4)

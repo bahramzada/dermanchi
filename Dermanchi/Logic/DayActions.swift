@@ -106,6 +106,37 @@ enum DayActions {
         }
     }
 
+    /// Dərman əlavə, düzəliş və ya silinəndən sonra aktiv günün gələcək damcılarını yeni cədvələ uyğunlaşdırır.
+    /// Vurulmuş damcılar və keçmiş qeydlər olduğu kimi qalır; yeni damcılar yalnız gələcəkdə yaranır
+    /// (dərman əvvəlki saatlarda təyin olunmamışdı), cədvəldən çıxanlar silinir.
+    static func applyMedicationChanges(context: ModelContext, now: Date = .now) {
+        guard let session = DaySession.openSessions(in: context).first else { return }
+        let existing = session.doses.sorted { ($0.plannedAt, $0.priority) < ($1.plannedAt, $1.priority) }
+        let planned = DoseScheduler.plan(start: session.startedAt, firstMedicationID: existing.first?.medicationID)
+        let matches = DoseScheduler.match(
+            previous: existing.map { ($0.medicationID, $0.plannedAt) },
+            planned: planned.map { ($0.medicationID, $0.plannedAt) })
+
+        var kept = Set<Int>()
+        for (item, match) in zip(planned, matches) {
+            if let match {
+                existing[match].plannedAt = item.plannedAt
+                existing[match].priority = item.priority
+                kept.insert(match)
+            } else if item.plannedAt > now {
+                let dose = Dose(medicationID: item.medicationID, priority: item.priority, plannedAt: item.plannedAt)
+                dose.session = session
+                context.insert(dose)
+            }
+        }
+        for (index, dose) in existing.enumerated() where !kept.contains(index) && dose.takenAt == nil {
+            let isScheduled = Medication.with(id: dose.medicationID).map { !$0.isArchived } ?? false
+            if dose.scheduledAt > now || !isScheduled { context.delete(dose) }
+        }
+        restagger(session, now: now)
+        save(context)
+    }
+
     /// "Yatıram" basılmayıbsa, köhnə günü son vurulan damcıda bitirir.
     /// Ondan sonrakı vurulmamış dozalar yuxu vaxtı sayılır və silinir.
     private static func closeForgottenSessions(context: ModelContext, except skipped: DaySession? = nil) {

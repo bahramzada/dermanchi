@@ -6,11 +6,13 @@ import WidgetKit
 struct DoseLiveActivity: Widget {
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: DoseActivityAttributes.self) { context in
+            let _ = MedicationStore.invalidate()
             DoseActivityLockView(state: context.state, isStale: context.isStale || context.state.isOverdue)
                 .environment(\.locale, L10n.locale)
                 .activityBackgroundTint(Color(red: 0.10, green: 0.13, blue: 0.20))
                 .activitySystemActionForegroundColor(.white)
         } dynamicIsland: { context in
+            MedicationStore.invalidate()
             let state = context.state
             let overdue = context.isStale || state.isOverdue
             return DynamicIsland {

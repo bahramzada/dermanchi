@@ -12,6 +12,7 @@ struct DoseProvider: TimelineProvider {
     }
 
     func getSnapshot(in context: Context, completion: @escaping (DoseEntry) -> Void) {
+        MedicationStore.invalidate()
         if context.isPreview {
             completion(DoseEntry(date: .now, state: .preview))
             return
@@ -24,6 +25,7 @@ struct DoseProvider: TimelineProvider {
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<DoseEntry>) -> Void) {
+        MedicationStore.invalidate()
         nonisolated(unsafe) let completion = completion
         Task { @MainActor in
             let start = Calendar.current.date(bySetting: .second, value: 0, of: .now) ?? .now

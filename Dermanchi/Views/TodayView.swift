@@ -288,7 +288,7 @@ struct MedicationSummaryRow: View {
                     .foregroundStyle(.secondary)
             }
             Spacer()
-            Text("Day \(medication.dayNumber(on: date))/\(medication.totalDays())")
+            Text("Day \(medication.dayNumber(on: date))/\(medication.totalDays)")
                 .font(.caption.monospacedDigit())
                 .foregroundStyle(.secondary)
         }

@@ -18,6 +18,35 @@
         }
       }
     },
+    "%lld days": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld day"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld days"
+                }
+              }
+            }
+          }
+        },
+        "az": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld gün"
+          }
+        }
+      }
+    },
     "%lld times a day": {
       "extractionState": "manual",
       "localizations": {
@@ -93,6 +122,23 @@
         }
       }
     },
+    "Add phase": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add phase"
+          }
+        },
+        "az": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mərhələ əlavə et"
+          }
+        }
+      }
+    },
     "All remaining reminders will be cancelled. Tomorrow, tap “Start the day” after your first drop.": {
       "extractionState": "manual",
       "localizations": {
@@ -161,6 +207,23 @@
         }
       }
     },
+    "Color": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Color"
+          }
+        },
+        "az": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rəng"
+          }
+        }
+      }
+    },
     "Could not read this file.": {
       "extractionState": "manual",
       "localizations": {
@@ -208,6 +271,23 @@
           "stringUnit": {
             "state": "translated",
             "value": "Növbəti damcıya geri sayımı göstərir. Söndürəndə dərhal yox olur. Live Activity-ləri iPhone-un Ayarlarından da idarə etmək olar."
+          }
+        }
+      }
+    },
+    "Course": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Course"
+          }
+        },
+        "az": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Müalicə"
           }
         }
       }
@@ -314,6 +394,57 @@
         }
       }
     },
+    "Delete": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete"
+          }
+        },
+        "az": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sil"
+          }
+        }
+      }
+    },
+    "Delete medication": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete medication"
+          }
+        },
+        "az": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dərmanı sil"
+          }
+        }
+      }
+    },
+    "Delete this medication?": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete this medication?"
+          }
+        },
+        "az": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bu dərman silinsin?"
+          }
+        }
+      }
+    },
     "Done": {
       "extractionState": "manual",
       "localizations": {
@@ -378,6 +509,23 @@
           "stringUnit": {
             "state": "translated",
             "value": "Dərmanchı şəxsi izləyicidir, tibbi cihaz deyil. Həmişə həkimin göstərişlərinə əməl et."
+          }
+        }
+      }
+    },
+    "Edit medication": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edit medication"
+          }
+        },
+        "az": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dərmana düzəliş"
           }
         }
       }
@@ -504,6 +652,23 @@
           "stringUnit": {
             "state": "translated",
             "value": "Məlumatı ixrac et"
+          }
+        }
+      }
+    },
+    "First day": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "First day"
+          }
+        },
+        "az": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "İlk gün"
           }
         }
       }
@@ -683,6 +848,23 @@
         }
       }
     },
+    "It is removed from today's plan. Past days keep their history.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "It is removed from today's plan. Past days keep their history."
+          }
+        },
+        "az": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bugünkü cədvəldən çıxarılır. Keçmiş günlərin tarixçəsi qalır."
+          }
+        }
+      }
+    },
     "Language": {
       "extractionState": "manual",
       "localizations": {
@@ -696,6 +878,23 @@
           "stringUnit": {
             "state": "translated",
             "value": "Dil"
+          }
+        }
+      }
+    },
+    "Last day: %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Last day: %@"
+          }
+        },
+        "az": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Son gün: %@"
           }
         }
       }
@@ -798,6 +997,40 @@
           "stringUnit": {
             "state": "translated",
             "value": "Bu gün ilk damcını nə vaxt vurduğunu dəyiş. Günün qalan hissəsi yenidən qurulur."
+          }
+        }
+      }
+    },
+    "Name": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Name"
+          }
+        },
+        "az": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ad"
+          }
+        }
+      }
+    },
+    "New medication": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New medication"
+          }
+        },
+        "az": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yeni dərman"
           }
         }
       }
@@ -1057,6 +1290,23 @@
         }
       }
     },
+    "Save": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save"
+          }
+        },
+        "az": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yadda saxla"
+          }
+        }
+      }
+    },
     "Save every day and drop to a file, or restore them from one. Use this to move to a new iPhone.": {
       "extractionState": "manual",
       "localizations": {
@@ -1070,6 +1320,23 @@
           "stringUnit": {
             "state": "translated",
             "value": "Bütün günləri və damcıları fayla yaz və ya fayldan bərpa et. Yeni iPhone-a keçmək üçün istifadə et."
+          }
+        }
+      }
+    },
+    "Schedule": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Schedule"
+          }
+        },
+        "az": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cədvəl"
           }
         }
       }
@@ -1393,6 +1660,23 @@
           "stringUnit": {
             "state": "translated",
             "value": "yatana qədər"
+          }
+        }
+      }
+    },
+    "Until bedtime": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Until bedtime"
+          }
+        },
+        "az": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yatana qədər"
           }
         }
       }
