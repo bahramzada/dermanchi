@@ -1256,6 +1256,23 @@
         }
       }
     },
+    "Per day": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Per day"
+          }
+        },
+        "az": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gündə"
+          }
+        }
+      }
+    },
     "Remind in 10 min": {
       "extractionState": "manual",
       "localizations": {

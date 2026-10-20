@@ -90,6 +90,7 @@ struct MedicationEditor: View {
                 draft.phases.append(.init(days: 5, drops: draft.phases.last?.drops ?? 3))
             } label: {
                 Label("Add phase", systemImage: "plus.circle")
+                    .labelStyle(.titleAndIcon)
             }
         } header: {
             Text("Course")
@@ -143,21 +144,20 @@ private struct PhaseRow: View {
     let range: String
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 6) {
+        VStack(alignment: .leading, spacing: 8) {
             Text(verbatim: range)
                 .font(.caption)
                 .foregroundStyle(.secondary)
             Stepper(value: $phase.days, in: 1...365) {
                 Text("\(phase.days) days")
             }
-            Toggle("Until bedtime", isOn: Binding(
-                get: { phase.drops == nil },
-                set: { phase.drops = $0 ? nil : 4 }))
-            if let drops = phase.drops {
-                Stepper(value: Binding(get: { drops }, set: { phase.drops = $0 }), in: 1...12) {
-                    Text("\(drops) times a day")
+            Picker("Per day", selection: $phase.drops) {
+                Text("Until bedtime").tag(Int?.none)
+                ForEach(1...12, id: \.self) { count in
+                    Text("\(count) times a day").tag(Int?.some(count))
                 }
             }
         }
+        .padding(.vertical, 2)
     }
 }

@@ -72,7 +72,10 @@ struct TodayView: View {
                     Button {
                         choosingFirst = true
                     } label: {
-                        Label("Start the day", systemImage: "sunrise.fill")
+                        HStack(spacing: 8) {
+                            Image(systemName: "sunrise.fill")
+                            Text("Start the day")
+                        }
                             .font(.headline)
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 8)

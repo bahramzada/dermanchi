@@ -53,6 +53,9 @@ private struct MedicationDetail: View {
                     Text("Day \(max(day, 0))/\(total)")
                         .font(.subheadline.monospacedDigit())
                 }
+                Image(systemName: "chevron.right")
+                    .font(.footnote.weight(.semibold))
+                    .foregroundStyle(.tertiary)
             }
             ProgressView(value: Double(min(max(day, 0), total)), total: Double(max(total, 1)))
                 .tint(medication.color)
