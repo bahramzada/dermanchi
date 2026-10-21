@@ -9,7 +9,9 @@ settings:
     DEVELOPMENT_TEAM: Y7X6GPG2MR
     CODE_SIGN_STYLE: Automatic
     SWIFT_VERSION: "6.0"
-    MARKETING_VERSION: "1.0"
+    # Bump the marketing version by hand for a user-visible release; the build number is the git commit count.
+    MARKETING_VERSION: "1.5"
+    ENABLE_USER_SCRIPT_SANDBOXING: NO
     CURRENT_PROJECT_VERSION: "1"
 targets:
   Dermanchi:
@@ -20,6 +22,12 @@ targets:
       path: Dermanchi/Dermanchi.entitlements
       properties:
         com.apple.security.application-groups: [group.com.raullte.dermanchi]
+    postBuildScripts:
+      - name: Build number from git
+        basedOnDependencyAnalysis: false
+        script: |
+          count=$(git -C "$SRCROOT" rev-list --count HEAD 2>/dev/null || echo 1)
+          /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $count" "$TARGET_BUILD_DIR/$INFOPLIST_PATH"
     dependencies:
       - target: DermanchiWidget
     settings:
@@ -50,8 +58,16 @@ targets:
       path: DermanchiWidget/Info.plist
       properties:
         CFBundleDisplayName: Dərmanchı
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         NSExtension:
           NSExtensionPointIdentifier: com.apple.widgetkit-extension
+    postBuildScripts:
+      - name: Build number from git
+        basedOnDependencyAnalysis: false
+        script: |
+          count=$(git -C "$SRCROOT" rev-list --count HEAD 2>/dev/null || echo 1)
+          /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $count" "$TARGET_BUILD_DIR/$INFOPLIST_PATH"
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.raullte.dermanchi.widget
