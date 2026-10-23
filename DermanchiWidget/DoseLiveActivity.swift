@@ -42,18 +42,14 @@ struct DoseLiveActivity: Widget {
                         .padding(.horizontal, 10)
                 }
             } compactLeading: {
-                HStack(spacing: 4) {
-                    Image(systemName: "drop.fill")
-                    Text(state.name)
-                        .lineLimit(1)
-                        .font(.caption.weight(.semibold))
-                }
-                .foregroundStyle(state.color)
+                Image(systemName: "drop.fill")
+                    .foregroundStyle(state.color)
             } compactTrailing: {
                 Text(state.scheduledAt, style: .timer)
                     .font(.caption.weight(.semibold).monospacedDigit())
                     .multilineTextAlignment(.trailing)
-                    .frame(maxWidth: 58)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.7)
                     .foregroundStyle(overdue ? .red : state.color)
             } minimal: {
                 Image(systemName: "drop.fill")
